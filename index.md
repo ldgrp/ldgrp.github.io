@@ -28,7 +28,7 @@ You can find me on [GitHub][github] and [LinkedIn][linkedin].
 [pizza]: #pizza
 [music]: #music
 [github]: https://github.com/ldgrp
-[linkedin]: https://linkedin.com/ldgrp
+[linkedin]: https://linkedin.com/in/ldgrp
 
 
 ## Posts
