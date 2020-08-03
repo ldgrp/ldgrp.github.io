@@ -1,6 +1,8 @@
 DEPLOY="docs/"
 BUILD="_site/"
 
+export NODE_ENV=production
+
 build() {
     COMMIT=$(git rev-parse HEAD)
 

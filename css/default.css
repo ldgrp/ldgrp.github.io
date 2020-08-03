@@ -1,7 +1,7 @@
 @tailwind base;
 
 h1, h2, h3, h4, h5, h6 {
-  @apply text-gray-800 font-semibold font-serif;
+  @apply text-gray-800 font-semibold font-serif mb-4;
 }
 
 h1 {
@@ -20,8 +20,12 @@ h4 {
   @apply text-xl;
 }
 
+pre {
+  @apply my-6;
+}
+
 p {
-  @apply my-6 ml-2;
+  @apply my-6;
 }
 
 a {
@@ -32,16 +36,24 @@ blockquote {
   @apply font-serif text-lg bg-gray-100 text-gray-700 italic border-l-4 border-gray-600 p-4 mx-6 my-2;
 }
 
-article figure {
-  @apply italic py-4 flex flex-col items-center;
+figure {
+  @apply flex flex-col items-center my-4;
+}
+
+figcaption {
+  @apply italic my-2 text-sm;
+}
+
+ul, ol {
+  @apply ml-10;
 }
 
 ul {
-  @apply list-disc list-inside;
+  @apply list-disc;
 }
 
 ol {
-  @apply list-decimal list-inside;
+  @apply list-decimal;
 }
 
 table {
@@ -166,6 +178,20 @@ tr.even {
 }
 .icon-envelope:before {
   content: "\e902";
+}
+
+.menu-link {
+  @apply font-semibold text-xl text-gray-700 m-2 p-2 no-underline;
+}
+.menu-link:hover {
+  @apply text-blue-500;
+}
+
+.footer-icon {
+  @apply text-4xl text-gray-700 px-1 mx-3 no-underline;
+}
+.footer-icon:hover {
+  @apply text-blue-500;
 }
 
 @tailwind components;
