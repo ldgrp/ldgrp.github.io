@@ -18,6 +18,7 @@ build() {
     mkdir $DEPLOY
 
     cp -r "$BUILD"/* $DEPLOY
+    cp "CNAME" $DEPLOY
 
     echo "Static site at $DEPLOY"
 
