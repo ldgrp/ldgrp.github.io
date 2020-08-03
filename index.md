@@ -2,14 +2,35 @@
 title: Home
 ---
 
-# Welcome
+# About Me
 
-Welcome to my blog!
+Hi! I'm Leo, a third year student studying Computer Science at the [University of Queensland][uq].
 
-I've reproduced a list of recent posts here for your reading pleasure:
+I'm really interested in functional programming, backend development, and operations research. I have a casual
+interest in mathematics.
+
+A list of my hobbies (in no particular order) ---
+coffee, [cooking][recipes], baking, [pizza][pizza] (homemade pizza at least once a week!), 
+[music][music], movies and TV, musical theatre,
+guitar, skateboarding (just picked it up. it's _never_ too late),
+electronics, 3d printing, board/tabletop games and reading.
+
+
+I live in Brisbane, Australia, but am originally from Manila, Philippines.
+
+Feel free to contact me by [email][email].
+
+You can find me on [GitHub][github] and [LinkedIn][linkedin].
+
+[email]: mailto:leoorpilla3@gmail.com
+[uq]: https://uq.edu.au/
+[recipes]: #recipes
+[pizza]: #pizza
+[music]: #music
+[github]: https://github.com/ldgrp
+[linkedin]: https://linkedin.com/ldgrp
+
 
 ## Posts
 
 $partial("templates/post-list.html")$
-
-or you can find more in the <a href="/archive.html">archives</a>
