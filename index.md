@@ -16,8 +16,6 @@ guitar, skateboarding (just picked it up. it's _never_ too late),
 electronics, 3d printing, board/tabletop games and reading.
 
 
-I live in Brisbane, Australia, but am originally from Manila, Philippines.
-
 Feel free to contact me by [email][email].
 
 You can find me on [GitHub][github] and [LinkedIn][linkedin].
