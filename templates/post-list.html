@@ -1,8 +1,8 @@
 <ul class="list-none m-0">
     $for(posts)$
-        <li class="flex">
-            <a class="no-underline" href="$url$">$title$</a> 
-            <div class="font-mono ml-auto">$date$</div>
+        <li class="mt-8 mb-4">
+            <div class="font-mono w-full md:w-1/2 justify-end">$date$</div>
+            <a class="no-underline text-xl w-full md:w-1/2" href="$url$">$title$</a> 
         </li>
     $endfor$
 </ul>

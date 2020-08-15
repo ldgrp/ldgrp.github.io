@@ -22,6 +22,11 @@ Feel free to contact me by [email][email].
 
 You can find me on [GitHub][github] and [LinkedIn][linkedin].
 
+# Posts
+
+$partial("templates/post-list.html")$
+
+
 [email]: mailto:leoorpilla3@gmail.com
 [uq]: https://uq.edu.au/
 [recipes]: #recipes
@@ -30,7 +35,3 @@ You can find me on [GitHub][github] and [LinkedIn][linkedin].
 [github]: https://github.com/ldgrp
 [linkedin]: https://linkedin.com/in/ldgrp
 
-
-## Posts
-
-$partial("templates/post-list.html")$
