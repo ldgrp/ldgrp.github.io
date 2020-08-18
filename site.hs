@@ -33,6 +33,14 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
                 >>= relativizeUrls
 
+    match "recipes/*" $ do
+        route $ setExtension "html"
+        compile $
+            pandocCompiler
+                >>= loadAndApplyTemplate "templates/post.html"    recipeCtx
+                >>= loadAndApplyTemplate "templates/default.html" recipeCtx
+                >>= relativizeUrls
+
     create ["archive.html"] $ do
         route idRoute
         compile $ do
@@ -69,3 +77,6 @@ postCtx :: Context String
 postCtx =
     dateField "date" "%d %b %Y" `mappend`
     defaultContext
+
+recipeCtx :: Context String
+recipeCtx = postCtx

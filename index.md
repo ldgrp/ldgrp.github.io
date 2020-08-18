@@ -10,7 +10,7 @@ I'm really interested in functional programming, backend development, and operat
 interest in mathematics.
 
 A list of my hobbies (in no particular order) ---
-coffee, [cooking][recipes], baking, [pizza][pizza] (homemade pizza at least once a week!), 
+[coffee][coffee], [cooking][recipes], baking, [pizza][pizza] (homemade pizza at least once a week!), 
 [music][music], movies and TV, musical theatre,
 guitar, skateboarding (just picked it up. it's _never_ too late),
 electronics, 3d printing, board/tabletop games and reading.
@@ -32,4 +32,4 @@ $partial("templates/post-list.html")$
 [music]: #music
 [github]: https://github.com/ldgrp
 [linkedin]: https://linkedin.com/in/ldgrp
-
+[coffee]: /recipes/coffee.html
