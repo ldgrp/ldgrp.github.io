@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Leo Orpilla III">
+        <meta name="description" content="The personal website of Leo Orpilla III">
+        <title>Leo Orpilla III</title>
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/syntax.css">
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172164803-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'UA-172164803-1');
+        </script>
+    </head>
+    <body class="flex flex-col min-h-screen max-w-4xl mx-auto text-body font-sans bg-primary">
+            <header class="flex flex-wrap flex-nowrap-ns p-4 md:px-5 items-center font-serif">
+                <div class="w-full flex justify-center">
+                    <a class="text-5xl font-bold link text-gray-800 no-underline" href="../">
+                        <span>Leo Orpilla III</span>
+                    </a>
+                </div>
+                <nav class="w-full flex justify-center">
+                    <a class="menu-link" href="../">Home</a>
+                    <a class="menu-link" href="../archive.html">Posts</a>
+                </nav>
+            </header>
+
+            <main class="flex-grow px-3 md:px-8 py-10 bg-white" role="main">
+                <article>
+    <section class="header">
+        <h1 class="text-4xl font-semibold">Factoring APIs in servant-client</h1>
+        <span class="text-gray-700">
+        Posted on 14 Aug 2020
+        </span>
+    </section>
+    <hr class="border-black border-opacity-25 my-4" />
+    <section class>
+        <p>I am currently writing a Haskell client <a href="https://github.com/ldgrp/up-api-haskell">library</a> for the Up Bank API with <a href="https://hackage.haskell.org/package/servant-client"><code>servant-client</code></a>.</p>
+<p>Endpoints require an <code>Authentication</code> request header with the format <code>Authorization: TOKEN_TYPE Token</code></p>
+<p>With servant, we can represent this with the <code>Header</code> combinator and add it to every endpoint. For example, the type of an API is as follows.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">type</span> <span class="dt">API</span> <span class="ot">=</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>       <span class="dt">Header</span> <span class="st">&quot;Authorization&quot;</span> <span class="dt">String</span> <span class="op">:&gt;</span> <span class="dt">Capture</span> <span class="st">&quot;x&quot;</span> <span class="dt">Int</span> <span class="op">:&gt;</span> <span class="dt">Get</span> '[<span class="dt">JSON</span>] <span class="dt">X</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>  <span class="op">:&lt;|&gt;</span> <span class="dt">Header</span> <span class="st">&quot;Authorization&quot;</span> <span class="dt">String</span> <span class="op">:&gt;</span> <span class="dt">Capture</span> <span class="st">&quot;y&quot;</span> <span class="dt">Int</span> <span class="op">:&gt;</span> <span class="dt">Get</span> '[<span class="dt">JSON</span>] <span class="dt">Y</span></span></code></pre></div>
+<p>We can factor out the <code>Header</code>s, similar to factoring in algebra <code>f g + f h = f (g + h)</code></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">type</span> <span class="dt">FactoredAPI</span> <span class="ot">=</span>  <span class="dt">Header</span> <span class="st">&quot;Authorization&quot;</span> <span class="dt">String</span> <span class="op">:&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>  (    <span class="dt">Capture</span> <span class="st">&quot;x&quot;</span> <span class="dt">Int</span> <span class="op">:&gt;</span> <span class="dt">Get</span> '[<span class="dt">JSON</span>] <span class="dt">X</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>  <span class="op">:&lt;|&gt;</span> <span class="dt">Capture</span> <span class="st">&quot;y&quot;</span> <span class="dt">Int</span> <span class="op">:&gt;</span> <span class="dt">Get</span> '[<span class="dt">JSON</span>] <span class="dt">Y</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a>  )</span></code></pre></div>
+<h2 id="clients">Clients</h2>
+<p><code>servant-client</code> provides the function <code>client</code> which automagically generates implementations and allows us to pattern match on the client functions of the API.</p>
+<p>An implementation of the unfactored client API is as follows.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="ot">getX ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>  <span class="co">-- ^ token</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a>     <span class="ot">-&gt;</span> <span class="dt">Int</span>           <span class="co">-- ^ x</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>     <span class="ot">-&gt;</span> <span class="dt">ClientM</span> <span class="dt">X</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="ot">getY ::</span> <span class="dt">Maybe</span> <span class="dt">String</span>  <span class="co">-- ^ token</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>     <span class="ot">-&gt;</span> <span class="dt">Int</span>           <span class="co">-- ^ y</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>     <span class="ot">-&gt;</span> <span class="dt">ClientM</span> <span class="dt">Y</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a>             </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="ot">api ::</span> <span class="dt">Proxy</span> <span class="dt">API</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>api <span class="ot">=</span> <span class="dt">Proxy</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a>             </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a>getX <span class="op">:&lt;|&gt;</span> getY <span class="ot">=</span> client api</span></code></pre></div>
+<p>Let’s look at the type of the unfactored client API. It returns two client functions combined with <code>:&lt;|&gt;</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>ghci<span class="op">&gt;</span> <span class="op">:</span>t client (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> <span class="dt">API</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>client (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> <span class="dt">FactoredAPI</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="ot">  ::</span> (<span class="dt">Maybe</span> [<span class="dt">Char</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">ClientM</span> <span class="dt">X</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>        <span class="op">:&lt;|&gt;</span> (<span class="dt">Maybe</span> [<span class="dt">Char</span>] <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">ClientM</span> <span class="dt">Y</span>)</span></code></pre></div>
+<p>Whereas the client of the factored API returns a function that takes a token and returns two client functions.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>ghci<span class="op">&gt;</span> <span class="op">:</span>t client (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> <span class="dt">FactoredAPI</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a>client (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> <span class="dt">FactoredAPI</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="ot">  ::</span> <span class="dt">Maybe</span> [<span class="dt">Char</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a>     <span class="ot">-&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">ClientM</span> <span class="dt">X</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a>        <span class="op">:&lt;|&gt;</span> (<span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">ClientM</span> <span class="dt">Y</span>)</span></code></pre></div>
+<p>An implementation of the factored API is then</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="ot">getX' ::</span> <span class="dt">Int</span>  <span class="co">-- ^ x</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a>      <span class="ot">-&gt;</span> <span class="dt">ClientM</span> <span class="dt">X</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="ot">getY' ::</span> <span class="dt">Int</span>  <span class="co">-- ^ y</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a>      <span class="ot">-&gt;</span> <span class="dt">ClientM</span> <span class="dt">Y</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a>             </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="ot">api' ::</span> <span class="dt">Proxy</span> <span class="dt">FactoredAPI</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true"></a>api' <span class="ot">=</span> <span class="dt">Proxy</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true"></a>             </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true"></a>getX' <span class="op">:&lt;|&gt;</span> getY' <span class="ot">=</span> client api' token</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true"></a>  <span class="kw">where</span><span class="ot"> token ::</span> <span class="dt">Maybe</span> <span class="dt">String</span></span></code></pre></div>
+<p>As expected, <code>client api' token</code> will return two client functions.</p>
+    </section>
+</article>
+
+<hr class="border-black border-opacity-25 my-5" />
+
+<div class="p-2" id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = "https://ldgrp.me//posts/2020-08-14-servant-client.html";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = "/posts/2020-08-14-servant-client.html"; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://ldgrp.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+            </main>
+
+            <footer class="bg-secondary p-4 h-64">
+                <div class="p-4 flex justify-center">
+                    <a class="footer-icon" href="mailto:leoorpilla3@gmail.com">
+                        <i class="icon-envelope"></i>
+                    </a>
+                    <a class="footer-icon" href="https://github.com/ldgrp">
+                        <i class="icon-github"></i>
+                    </a>
+                    <a class="footer-icon" href="https://www.linkedin.com/in/ldgrp">
+                        <i class="icon-linkedin-in"></i>
+                    </a>
+                </div>
+                <div class="text-center">
+                    <p>
+                    Source on
+                    <a class="text-blue-700" href="https://github.com/ldgrp/ldgrp.github.io">GitHub</a>.
+                    Site proudly generated by
+                    <a class="text-blue-700" href="https://jaspervdj.be/hakyll">Hakyll</a>.
+                    </p>
+                </div>
+            </footer>
+    </body>
+</html>
