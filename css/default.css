@@ -1,7 +1,14 @@
+:root {
+  --color-primary:#EDF2F7;
+  --color-secondary:#CBD5E0;
+  --color-heading:#2D3748;
+  --color-body:#1A202C;
+}
+
 @tailwind base;
 
 h1, h2, h3, h4, h5, h6 {
-  @apply text-gray-800 font-semibold font-serif mb-4;
+  @apply text-body font-semibold font-serif my-4;
 }
 
 h1 {
@@ -33,7 +40,7 @@ a {
 }
 
 blockquote {
-  @apply font-serif text-lg bg-gray-100 text-gray-700 italic border-l-4 border-gray-600 p-4 mx-6 my-2;
+  @apply font-serif text-lg bg-gray-100 text-gray-700 italic border-l-4 border-gray-600 p-2 mx-6 my-2;
 }
 
 figure {
@@ -45,7 +52,7 @@ figcaption {
 }
 
 ul, ol {
-  @apply ml-10;
+  @apply ml-10 my-6;
 }
 
 ul {
@@ -181,7 +188,7 @@ tr.even {
 }
 
 .menu-link {
-  @apply font-semibold text-xl text-gray-700 m-2 p-2 no-underline;
+  @apply font-semibold text-xl text-heading m-2 p-2 no-underline;
 }
 .menu-link:hover {
   @apply text-blue-500;

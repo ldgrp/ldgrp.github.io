@@ -23,6 +23,12 @@ module.exports = {
           defaultTheme.fontFamily.serif
         ],
       },
+      colors: {
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
+        heading: 'var(--color-heading)',
+        body: 'var(--color-body)'
+      },
     },
   },
   variants: {},
