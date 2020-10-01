@@ -43,12 +43,6 @@ main = hakyll $ do
     create ["archive.html"] $ do
         route idRoute
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*.md"
-            let archiveCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    constField "title" "Archive"            `mappend`
-                    defaultContext
-
             makeItem ""
                 >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
                 >>= loadAndApplyTemplate "templates/default.html" archiveCtx
@@ -58,10 +52,6 @@ main = hakyll $ do
     match "index.md" $ do
         route $ setExtension "html"
         compile $ do
-            posts <- recentFirst =<< loadAll "posts/*"
-            let indexCtx =
-                    listField "posts" postCtx (return posts) `mappend`
-                    defaultContext
 
             pandocCompiler
                 >>= applyAsTemplate indexCtx
@@ -79,3 +69,14 @@ postCtx =
 
 recipeCtx :: Context String
 recipeCtx = postCtx
+
+archiveCtx :: Context String
+archiveCtx =
+    listField "posts" postCtx (recentFirst =<< loadAll "posts/*.md") `mappend`
+    constField "title" "Archive"                                     `mappend`
+    defaultContext
+    
+indexCtx :: Context String
+indexCtx =
+    listField "posts" postCtx (recentFirst =<< loadAll "posts/*.md") `mappend`
+    defaultContext
