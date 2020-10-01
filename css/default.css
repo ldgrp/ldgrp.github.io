@@ -40,7 +40,7 @@ a {
 }
 
 blockquote {
-  @apply font-serif text-lg bg-gray-100 text-gray-700 italic border-l-4 border-gray-600 p-2 mx-6 my-2;
+  @apply font-serif text-lg bg-gray-100 text-gray-700 italic border-l-4 border-gray-600 p-1 mx-6 my-2;
 }
 
 figure {
@@ -177,15 +177,22 @@ tr.even {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-github:before {
-  content: "\e900";
-}
-.icon-linkedin-in:before {
+.icon-mail:before {
   content: "\e901";
 }
-.icon-envelope:before {
-  content: "\e902";
+.icon-keybase:before {
+  content: "\e900";
 }
+.icon-twitter:before {
+  content: "\ea96";
+}
+.icon-github:before {
+  content: "\eab0";
+}
+.icon-linkedin2:before {
+  content: "\eaca";
+}
+
 
 .menu-link {
   @apply font-semibold text-xl text-heading m-2 p-2 no-underline;

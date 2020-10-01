@@ -652,7 +652,7 @@ blockquote {
   --border-opacity:1;
   border-color:#718096;
   border-color:rgba(113, 128, 150, var(--border-opacity));
-  padding:0.5rem;
+  padding:0.25rem;
   margin-left:1.5rem;
   margin-right:1.5rem;
   margin-top:0.5rem;
@@ -842,16 +842,24 @@ tr.even {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-github:before {
-  content: "\e900";
-}
-
-.icon-linkedin-in:before {
+.icon-mail:before {
   content: "\e901";
 }
 
-.icon-envelope:before {
-  content: "\e902";
+.icon-keybase:before {
+  content: "\e900";
+}
+
+.icon-twitter:before {
+  content: "\ea96";
+}
+
+.icon-github:before {
+  content: "\eab0";
+}
+
+.icon-linkedin2:before {
+  content: "\eaca";
 }
 
 .menu-link {

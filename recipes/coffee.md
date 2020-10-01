@@ -1,6 +1,7 @@
 ---
 title: Coffee
 date: 16 August 2020
+description: Geeking out about coffee and different ways to prepare coffee.
 ---
 
 <div class="font-mono mr-6">

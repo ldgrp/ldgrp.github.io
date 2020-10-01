@@ -1,5 +1,5 @@
 ---
-title: Home
+title: Leo Orpilla III
 ---
 
 # About Me
@@ -16,9 +16,9 @@ guitar, skateboarding (just picked it up. it's _never_ too late),
 electronics, 3d printing, board/tabletop games and reading.
 
 
-Feel free to contact me by [email][email].
+Feel free to slide into my [Twitter][twitter] DMs or contact me by [email][email].
 
-You can find me on [GitHub][github] and [LinkedIn][linkedin].
+You can also find me on [GitHub][github] and [LinkedIn][linkedin].
 
 # Posts
 
@@ -33,3 +33,4 @@ $partial("templates/post-list.html")$
 [github]: https://github.com/ldgrp
 [linkedin]: https://linkedin.com/in/ldgrp
 [coffee]: /recipes/coffee.html
+[twitter]: https://twitter.com/_ldgrp
