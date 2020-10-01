@@ -1,7 +1,8 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import           Data.Monoid (mappend)
-import           Hakyll
+import Data.Monoid (mappend)
+import Hakyll
+import System.FilePath.Posix  ((</>))
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -25,7 +26,7 @@ main = hakyll $ do
             >>= relativizeUrls
 
     match "posts/*.md" $ do
-        route $ setExtension "html"
+        route $ removeDateRoute
         compile $
             pandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    postCtx
@@ -80,3 +81,7 @@ indexCtx :: Context String
 indexCtx =
     listField "posts" postCtx (recentFirst =<< loadAll "posts/*.md") `mappend`
     defaultContext
+
+removeDateRoute :: Routes
+removeDateRoute = 
+  composeRoutes (gsubRoute "[0-9]{4}-[0-9]{2}-[0-9]{2}-" $ const "") (setExtension "html")
