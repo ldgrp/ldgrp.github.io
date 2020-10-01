@@ -25,7 +25,7 @@ You can also find me on [GitHub][github] and [LinkedIn][linkedin].
 $partial("templates/post-list.html")$
 
 
-[email]: mailto:leoorpilla3@gmail.com
+[email]: mailto:dev@ldgrp.me
 [uq]: https://uq.edu.au/
 [recipes]: #recipes
 [pizza]: #pizza
