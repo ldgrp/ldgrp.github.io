@@ -6,7 +6,7 @@ title: Leo Orpilla III
 
 Hi! I'm Leo, a third year student studying Computer Science at the [University of Queensland][uq].
 
-I'm really interested in functional programming, backend development, and operations research. I have a casual
+My intersts are functional programming, full-stack development, and operations research. I have a casual
 interest in mathematics.
 
 A list of my hobbies (in no particular order) ---
