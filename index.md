@@ -4,7 +4,7 @@ title: Leo Orpilla III
 ::: { .resume }
 ## Currently
 ::: { .currently }
-Junior Software Developer at [Displayr][displayr]
+Junior Software Engineer at [Displayr][displayr]
 ::: 
 ## Links 
 ::: { .badges }

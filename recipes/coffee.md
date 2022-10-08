@@ -1,44 +1,40 @@
 ---
 title: Coffee
-date: 16 August 2020
+date: 08 August 2020
+last-edited: 29 September 2022
 description: Geeking out about coffee and different ways to prepare coffee.
 ---
 
-<div class="font-mono mr-6">
-## Gear
+<div class="font-mono">
 
+## Gear
 - Aeropress
 - French Press
 - v60 (plastic)
+- Moka Pot
+- Bellman Stovetop Steamer
 - Timemore C2
 
 
 ## Aeropress
-
-this is my daily driver
-
-coffee: 17g \
+coffee: 15g \
 grind: medium (15 clicks - Timemore C2) \
-water: 255g @ 87°C \
+water: 225g @ 90&deg;C \
 ratio: 1:15 \
 style: inverted \
-time: 2 minutes 45 seconds \
+time: 2 minutes 40 seconds \
 
-1. add 17g ground coffee
+1. add 15g ground coffee.
 2. pour 100g water in 10 seconds.
 3. stir for 15 seconds.
 4. bloom for 1 minute 40 seconds.
-5. wet paper filter.
-6. pour 150g water in 10 seconds.
-7. press down for 30 seconds.
+5. pour 150g water in 10 seconds.
+6. press down for 30 seconds.
 
 ## French Press
-
-i use james hoffman's [technique](https://www.youtube.com/watch?v=st571DYYTR8).
-
 coffee: 33g \
 grind: medium (17 clicks - Timemore C2) \
-water: 500g @ 96°C \
+water: 500g @ 96&deg;C \
 ratio: 1:15 \
 time: 9-12 minutes \
 
@@ -50,20 +46,11 @@ time: 9-12 minutes \
 6. wait for 5-8 minutes.
 7. press until the plunger sits on the surface of the coffee.
 
-
 ## Aeropress Latte
-   
-technically, the aeropress does not make espresso. it can, however, make
-a *strong*, tasty cup of coffee.
-
-i don't have counter space for a dedicated milk frother and
-stovetop steamers take too long. i think a french press
-works just fine™.
-
 coffee: 23g \
 grind: fine (9 clicks - Timemore C2) \
-water: 90g @ 93°C \
-milk: 170g @ 65°C \
+water: 90g @ 93&deg;C \
+milk: 170g @ 65&deg;C \
 ratio: 1:4 \
 time: 1 minute 30 seconds \
 
@@ -71,9 +58,9 @@ time: 1 minute 30 seconds \
 2. pour 90g water in 10 seconds.
 3. stir for 10 seconds.
 4. wait for 1 minute 10 seconds
-5. while waiting, microwave $^{eek}$ 170g milk until it reaches 65°C (around 90 seconds)
+5. while waiting, microwave the milk until it reaches 65°C
 6. press down for 10 seconds.
-7. pour heated milk into the french press and plunge (violently)
+7. pour heated milk into the french press and plunge violently
    for 15 seconds, stopping every 5 seconds to swirl the milk.
 8. pour frothed milk into coffee.
 </div>
