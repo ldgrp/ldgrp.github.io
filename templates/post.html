@@ -2,7 +2,11 @@
     <section class="header">
         <h1 class="text-4xl font-semibold">$title$</h1>
         <span class="text-gray-700">
+        $if(last-edited)$
+        Last modified $last-edited$
+        $else$
         Posted on $date$
+        $endif$
         </span>
     </section>
     <hr class="border-black border-opacity-25 my-4"/>

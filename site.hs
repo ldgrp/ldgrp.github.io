@@ -15,6 +15,10 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
+    match "scripts/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
@@ -26,7 +30,7 @@ main = hakyll $ do
             >>= relativizeUrls
 
     match "posts/*.md" $ do
-        route $ removeDateRoute
+        route removeDateRoute
         compile $
             pandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    postCtx
