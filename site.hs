@@ -84,6 +84,7 @@ archiveCtx =
 indexCtx :: Context String
 indexCtx =
     listField "posts" postCtx (recentFirst =<< loadAll "posts/*.md") `mappend`
+    constField "title" "Leo Orpilla III" `mappend`
     defaultContext
 
 removeDateRoute :: Routes
