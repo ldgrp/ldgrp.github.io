@@ -1,26 +1,22 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-  purge: {
-    content: [
-    './posts/**/*.html',
-    './templates/**/*.html',
-    '*.html',
-    './posts/**/*.md',
-    './templates/**/*.md',
-    '*.md',
-    ],
-  },
+  content: [
+  './posts/**/*.{html, md}',
+  './templates/**/*.{html, md}',
+  '*.{html, md}',
+  ],
+  darkMode: 'class',
   theme: {
     extend: {
       fontFamily: {
         sans: [
           'Inter',
-          defaultTheme.fontFamily.sans,
+          ...defaultTheme.fontFamily.sans,
         ],
         serif: [
           'Roboto Slab',
-          defaultTheme.fontFamily.serif
+          ...defaultTheme.fontFamily.serif
         ],
       },
       colors: {

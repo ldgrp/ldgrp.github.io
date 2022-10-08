@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "dependencies": {
-    "tailwindcss": "^1.6.1"
+  "devDependencies": {
+    "tailwindcss": "^3.1.8"
   },
-  "devDependencies": {},
   "scripts": {
-    "build:css": "tailwind build css/default.css -o css/style.css"
+    "build:css": "tailwindcss -i css/default.css -o css/style.css"
   },
   "keywords": [],
   "author": "",
