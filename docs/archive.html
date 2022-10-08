@@ -1,89 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="author" content="Leo Orpilla III">
-        
-        
-        <meta property="og:type" content="article" />
-        <meta name="og:title" content="Archive">
-        <title>Archive </title>
-        
-        <link rel="stylesheet" href="./css/style.css">
-        <link rel="stylesheet" href="./css/syntax.css">
-        <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png">
-        <link rel="manifest" href="./images/site.webmanifest">
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172164803-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-172164803-1');
-        </script>
-    </head>
-    <body class="flex flex-col min-h-screen max-w-4xl mx-auto text-body font-sans bg-primary">
-            <header class="flex flex-wrap flex-nowrap-ns p-4 md:px-5 items-center font-serif">
-                <div class="w-full flex justify-center">
-                    <a class="text-5xl font-bold link text-gray-800 no-underline" href="./">
-                        <span>Leo Orpilla III</span>
-                    </a>
-                </div>
-                <nav class="w-full flex justify-center">
-                    <a class="menu-link" href="./">Home</a>
-                    <a class="menu-link" href="./archive.html">Posts</a>
-                </nav>
-            </header>
-
-            <main class="flex-grow px-3 md:px-8 py-10 bg-white" role="main">
-                <h1>Posts</h1>
-<ul class="list-none m-0">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Leo Orpilla III" />
+     
+    <meta property="og:type" content="article" />
+    <meta name="og:title" content="Archive" />
+    <title>Archive</title>
     
-        <li class="mt-8 mb-4">
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="stylesheet" href="./css/syntax.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon-16x16.png" />
+    <link rel="manifest" href="./images/site.webmanifest" />
+    <!-- Dark mode -->
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (
+        localStorage.getItem("color-theme") === "dark" ||
+        (!("color-theme" in localStorage) &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172164803-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-172164803-1");
+    </script>
+  </head>
+  <body class="flex flex-col min-h-screen p-2 sm:p-4 max-w-4xl mx-auto text-gray-800 bg-white dark:bg-slate-900 dark:text-gray-200 duration-100">
+    <div class="absolute m-4 top-0 right-0">
+    <button id="theme-toggle" type="button" class="text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5">
+    <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+    <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+</button>
+</div>
+<header class="flex flex-wrap my-10 items-center">
+    <div class="w-full flex justify-center">
+        <a class="text-5xl tracking-tight font-bold link dark:text-gray-50" href="./">
+            <span>Leo Orpilla III</span>
+        </a>
+    </div>
+</header>
+
+
+    <main><h1>Posts</h1>
+<ul class="list-none m-0 space-y-2">
+    
+        <li>
             <div class="font-mono w-full md:w-1/2 justify-end">01 Oct 2020</div>
             <a class="no-underline text-xl w-full md:w-1/2" href="./posts/unfold.html">Unfolding Paginated APIs in Haskell</a> 
         </li>
     
-        <li class="mt-8 mb-4">
+        <li>
             <div class="font-mono w-full md:w-1/2 justify-end">14 Aug 2020</div>
             <a class="no-underline text-xl w-full md:w-1/2" href="./posts/factoring-apis.html">Factoring APIs in servant-client</a> 
         </li>
     
 </ul>
 
+</main>
+    <footer class="flex flex-col py-8 space-y-4">
+    <div class="flex justify-center">
+        <a class="footer-icon" href="mailto:dev@ldgrp.me">
+            <i class="icon-mail"></i>
+        </a>
+        <a class="footer-icon" href="https://twitter.com/_ldgrp">
+            <i class="icon-twitter"></i>
+        </a>
+        <a class="footer-icon" href="https://github.com/ldgrp">
+            <i class="icon-github"></i>
+        </a>
+        <a class="footer-icon" href="https://www.linkedin.com/in/ldgrp">
+            <i class="icon-linkedin2"></i>
+        </a>
+        <a class="footer-icon" href="https://keybase.io/ldgrp">
+            <i class="icon-keybase"></i>
+        </a>
+    </div>
+    <div class="text-center">
+        <p>
+        Site proudly generated by
+        <a class="text-blue-600 dark:text-blue-500 font-medium" href="https://jaspervdj.be/hakyll">Hakyll</a>.
+        Source on
+        <a class="text-blue-600 dark:text-blue-500 font-medium" href="https://github.com/ldgrp/ldgrp.github.io">GitHub</a>.
+        </p>
+    </div>
+</footer>
 
-            </main>
-
-            <footer class="bg-secondary p-4 h-64">
-                <div class="p-4 flex justify-center">
-                    <a class="footer-icon" href="mailto:dev@ldgrp.me">
-                        <i class="icon-mail"></i>
-                    </a>
-                    <a class="footer-icon" href="https://twitter.com/_ldgrp">
-                        <i class="icon-twitter"></i>
-                    </a>
-                    <a class="footer-icon" href="https://github.com/ldgrp">
-                        <i class="icon-github"></i>
-                    </a>
-                    <a class="footer-icon" href="https://www.linkedin.com/in/ldgrp">
-                        <i class="icon-linkedin2"></i>
-                    </a>
-                    <a class="footer-icon" href="https://keybase.io/ldgrp">
-                        <i class="icon-keybase"></i>
-                    </a>
-                </div>
-                <div class="text-center">
-                    <p>
-                    Source on
-                    <a class="text-blue-700" href="https://github.com/ldgrp/ldgrp.github.io">GitHub</a>.
-                    Site proudly generated by
-                    <a class="text-blue-700" href="https://jaspervdj.be/hakyll">Hakyll</a>.
-                    </p>
-                </div>
-            </footer>
-    </body>
+    <script src="./scripts/darkmode.js"></script>
+  </body>
 </html>
