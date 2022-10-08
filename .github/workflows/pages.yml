@@ -44,6 +44,14 @@ jobs:
       run: cabal update
     - name: Build
       run: cabal build
+    - name: Download tailwind
+      run: |
+        curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v3.1.8/tailwindcss-linux-x64
+        chmod +x tailwindcss-linux-x64
+        mv tailwindcss-linux-x64 tailwindcss
+
+    - name: Compile and minify CSS for production
+      run: ./tailwindcss -i css/input.css -o css/style.css --minify
     - name: Generate site
       run: cabal exec site build
     - name: Upload artifact
