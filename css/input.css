@@ -70,9 +70,14 @@
 .resume .currently a {
   @apply font-medium;
 }
+
 .resume .currently a,
 .resume .interests a {
   @apply text-blue-600 dark:text-blue-500 hover:underline;
+}
+
+.resume h2 a {
+  @apply text-blue-600 dark:text-blue-500 hover:underline font-medium;
 }
 
 article h1 {
@@ -88,10 +93,10 @@ article h3 {
 }
 
 article p {
-  @apply mb-3;
+  @apply mb-5;
 }
 
-article p a {
+article a {
   @apply font-medium text-blue-600 dark:text-blue-500 underline hover:no-underline;
 }
 
@@ -99,14 +104,51 @@ article hr {
   @apply my-8 h-px border-0 bg-gray-200 dark:bg-gray-700;
 }
 
+article ul,
+article ol {
+  @apply mb-5 space-y-1 list-inside text-gray-700 dark:text-gray-300;
+}
+
+article ul ul,
+article ol ol {
+  @apply pl-5;
+}
+
 article ul {
-  @apply space-y-1 list-disc list-inside text-gray-700 dark:text-gray-300;
+  @apply list-disc;
 }
 
 article ol {
-  @apply space-y-1 list-decimal list-inside text-gray-700 dark:text-gray-300;
+  @apply list-decimal;
 }
 
+article table {
+  @apply text-sm text-left text-gray-500 dark:text-gray-400;
+}
+
+article tr.header {
+  @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400;
+}
+
+article tr {
+  @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700;
+}
+
+article th {
+  @apply py-3 px-6
+}
+
+article td {
+  @apply py-4 px-6
+}
+
+article img {
+  @apply mx-auto rounded-lg;
+}
+
+article figcaption {
+  @apply mt-2 mb-5 text-sm text-center text-gray-500 dark:text-gray-400;
+}
 
 @tailwind components;
 @tailwind utilities;

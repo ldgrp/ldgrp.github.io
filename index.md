@@ -38,6 +38,7 @@ Junior Software Engineer at [Displayr][displayr]
 $partial("templates/post-list.html")$
 :::
 
+## [Ideas][ideas]
 :::
 
 
@@ -54,3 +55,4 @@ $partial("templates/post-list.html")$
 [spotify]: https://open.spotify.com/user/lorpilla3
 [strava]: https://www.strava.com/athletes/97171311
 [displayr]: https://displayr.com/
+[ideas]: ideas.html

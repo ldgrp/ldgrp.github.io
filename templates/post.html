@@ -1,6 +1,11 @@
-<article>
+<article class="$entry-type$">
     <section class="header">
-        <h1>$title$</h1>
+        <h1>
+            $if(status)$
+            <span class="font-mono">[$status$]</span>
+            $endif$
+            $title$
+        </h1>
         <span class="text-gray-700 dark:text-gray-300">
         $if(last-edited)$
         Last modified $last-edited$
