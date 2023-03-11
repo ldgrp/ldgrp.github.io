@@ -52,7 +52,7 @@
 }
 
 .badges li {
-  @apply py-1 px-2 text-sm font-medium rounded border border-gray-500 dark:border-gray-400;
+  @apply py-1 px-2 text-sm font-medium rounded border border-gray-500 dark:border-gray-400 hover:bg-gray-100 hover:cursor-pointer;
 }
 
 .resume { 

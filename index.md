@@ -10,11 +10,9 @@ Junior Software Engineer at [Displayr][displayr]
 ::: { .badges }
 - [Email][email]
 - [GitHub][github]
+- [Observable][observable]
 - [LinkedIn][linkedin]
-- [Instagram][instagram]
 - [Twitter][twitter]
-- [Spotify][spotify]
-- [Strava][strava]
 :::
 
 ## Interests
@@ -43,16 +41,12 @@ $partial("templates/post-list.html")$
 
 
 [email]: mailto:dev@ldgrp.me
-[uq]: https://uq.edu.au/
-[recipes]: #recipes
-[pizza]: #pizza
-[music]: #music
 [github]: https://github.com/ldgrp
 [linkedin]: https://linkedin.com/in/ldgrp
 [coffee]: /recipes/coffee.html
 [twitter]: https://twitter.com/_ldgrp
-[instagram]: https://www.instagram.com/leoorpillaiii/
 [spotify]: https://open.spotify.com/user/lorpilla3
 [strava]: https://www.strava.com/athletes/97171311
 [displayr]: https://displayr.com/
 [ideas]: ideas.html
+[observable]: https://observablehq.com/@ldgrp
