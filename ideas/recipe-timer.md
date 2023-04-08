@@ -2,7 +2,7 @@
 title: Dynamic timers in recipes for mobile
 date: 2022-09-29
 last-edited: 2022-11-12
-status: TODO
+status: todo
 tags: recipe
 ---
 

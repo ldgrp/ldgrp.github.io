@@ -1,13 +1,11 @@
-<ul class="list-none m-0 space-y-2">
+<ul class="entry-list">
     $for(ideas)$
         <li>
-            <div class="font-mono flex justify-between">
-                <div>
-                    <span class="font-bold">[$status$]</span>
-                    <a class="no-underline" href="$url$">$title$</a>
-                </div>
-                <span>$date$</span>
+            <div class="metadata">
+                <span class="date">$date$</span>
+                <span class="status status-$status$">$status$</span>
             </div>
+            <a class="title" href="$url$">$title$</a>
         </li>
     $endfor$
 </ul>

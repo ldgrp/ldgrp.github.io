@@ -37,6 +37,9 @@ $partial("templates/post-list.html")$
 :::
 
 ## [Ideas][ideas]
+::: { .posts }
+$partial("templates/ideas-list.html")$
+:::
 :::
 
 

@@ -2,7 +2,7 @@
 title: Dynamic scaling of ingredients
 date: 2022-11-11
 last-edited: 2022-11-12
-status: TODO
+status: todo
 tags: recipe
 ---
 

@@ -2,7 +2,7 @@
 title: Segment Anything App on Canva
 last-edited: 2023-04-07
 date: 2023-04-06
-status: TODO
+status: todo
 tags: design
 ---
 

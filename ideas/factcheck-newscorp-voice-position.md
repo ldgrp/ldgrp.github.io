@@ -2,7 +2,7 @@
 title: Factchecking Newscorp's the Voice position
 last-edited: 2023-04-07
 date: 2023-04-07
-status: TODO
+status: in-progress
 tags: politics
 ---
 

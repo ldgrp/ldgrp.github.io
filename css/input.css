@@ -40,11 +40,35 @@
   content: "\eaca";
 }
 
+body {
+  @apply flex flex-col min-h-screen p-4 sm:p-4 max-w-3xl mx-auto text-gray-900 bg-amber-50 bg-opacity-100 dark:bg-zinc-950 dark:text-gray-200 duration-100
+}
+
+.entry-list {
+  @apply list-none m-0 space-y-2 max-w-xl;
+}
+
+.entry-list .metadata {
+  @apply flex justify-between max-w-md;
+}
+
+.entry-list .date {
+  @apply text-gray-700 dark:text-gray-300 font-mono text-sm;
+}
+
+.entry-list .title {
+  @apply text-inherit text-lg decoration-dotted underline hover:underline
+}
+
+footer a {
+  @apply text-yellow-600 dark:text-yellow-500;
+}
+
 .footer-icon {
   @apply text-3xl text-gray-600 dark:text-gray-200 px-1 mx-3;
 }
 .footer-icon:hover {
-  @apply text-blue-600 dark:text-blue-500;
+  @apply text-yellow-600 dark:text-yellow-500;
 }
 
 .badges ul {
@@ -52,7 +76,23 @@
 }
 
 .badges li {
-  @apply py-1 px-2 text-sm font-medium rounded border border-gray-500 dark:border-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:cursor-pointer;
+  @apply py-1 px-2 text-sm font-medium rounded border border-gray-500 dark:border-gray-400 hover:bg-amber-100 dark:hover:bg-gray-800 hover:cursor-pointer;
+}
+
+.status {
+  @apply text-xs bg-gray-100 text-gray-800 font-medium px-2.5 py-0.5 rounded uppercase;
+}
+
+.status-todo {
+  @apply bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300;
+}
+
+.status-in-progress {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300;
+}
+
+.status-done {
+  @apply bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300;
 }
 
 .resume { 
@@ -73,11 +113,11 @@
 
 .resume .currently a,
 .resume .interests a {
-  @apply text-blue-600 dark:text-blue-500 hover:underline;
+  @apply text-yellow-600 dark:text-yellow-500 hover:underline;
 }
 
 .resume h2 a {
-  @apply text-blue-600 dark:text-blue-500 hover:underline font-medium;
+  @apply text-yellow-600 dark:text-yellow-500 hover:underline font-medium;
 }
 
 article h1 {
@@ -97,16 +137,16 @@ article p {
 }
 
 article a {
-  @apply font-medium text-blue-600 dark:text-blue-500 underline hover:no-underline;
+  @apply font-medium text-yellow-600 dark:text-yellow-500 underline hover:no-underline;
 }
 
 article hr {
-  @apply my-8 h-px border-0 bg-gray-200 dark:bg-gray-700;
+  @apply my-8 h-px border-0 bg-gray-200 dark:bg-zinc-700;
 }
 
 article ul,
 article ol {
-  @apply mb-5 space-y-1 list-inside text-gray-700 dark:text-gray-300;
+  @apply mb-5 space-y-1 list-inside;
 }
 
 article ul ul,
@@ -127,11 +167,11 @@ article table {
 }
 
 article tr.header {
-  @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400;
+  @apply text-xs text-gray-700 uppercase bg-gray-50 dark:bg-zinc-700 dark:text-gray-400;
 }
 
 article tr {
-  @apply bg-white border-b dark:bg-gray-800 dark:border-gray-700;
+  @apply bg-white border-b dark:bg-zinc-800 dark:border-gray-700;
 }
 
 article th {

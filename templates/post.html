@@ -1,21 +1,20 @@
 <article class="$entry-type$">
     <section class="header">
-        <h1>
+        <div class="flex justify-between items-baseline">
+            <h1>$title$</h1>
             $if(status)$
-            <span class="font-mono">[$status$]</span>
+            <span class="status status-$status$">$status$</span>
             $endif$
-            $title$
-        </h1>
-        <span class="text-gray-700 dark:text-gray-300">
-        $if(last-edited)$
-        Last modified $last-edited$
-        $else$
+        </div>
+        <div class="text-gray-700 dark:text-gray-300">
         Posted on $date$
-        $endif$
-        </span>
+        </div>
     </section>
     <hr>
     <section>
         $body$
+        $if(last-edited)$
+        Last modified $last-edited$
+        $endif$
     </section>
 </article>

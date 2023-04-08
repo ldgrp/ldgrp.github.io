@@ -1,12 +1,12 @@
-<ul class="list-none m-0 space-y-2">
+<ul class="entry-list">
     <li>
-        <div class="font-mono w-full md:w-1/2 justify-end">11 Mar 2023</div>
-        <a class="no-underline text-xl w-full md:w-1/2" href="https://observablehq.com/@ldgrp/how-big-is-my-tax-cut">How big is my tax cut?</a> 
+        <div class="date">11 Mar 2023</div>
+        <a class="title" href="https://observablehq.com/@ldgrp/how-big-is-my-tax-cut">How big is my tax cut?</a> 
     </li>
     $for(posts)$
         <li>
-            <div class="font-mono w-full md:w-1/2 justify-end">$date$</div>
-            <a class="no-underline text-xl w-full md:w-1/2" href="$url$">$title$</a> 
+            <div class="date">$date$</div>
+            <a class="title" href="$url$">$title$</a> 
         </li>
     $endfor$
 </ul>

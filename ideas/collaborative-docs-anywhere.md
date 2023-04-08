@@ -2,7 +2,7 @@
 title: Make any text input collaborative
 last-edited: 2022-11-12
 date: 2022-09-09
-status: TODO
+status: todo
 tags: chrome-extension, collaborative
 ---
 
@@ -28,6 +28,7 @@ but that will likely never happen. Another solution is to Do It Yourself.
 - After everything is done, the original user can "send" the edited document back to the text input.
 
 ### Notes
+
 - Yes, you _can_ just use Google Docs but where's the fun in that?
 - It is extremely likely that we are using the wrong tool for the job.
 - There are many ways to do rich text editing so it is unlikely to be supported
