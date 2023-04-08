@@ -1,5 +1,5 @@
 ---
-title: Factchecking Newscorp's the Voice position
+title: Analysing Newscorp's stance on the Voice
 last-edited: 2023-04-07
 date: 2023-04-07
 status: in-progress

@@ -1,5 +1,5 @@
 ---
-title: Segment Anything App on Canva
+title: Segment Anything as a Canva App
 last-edited: 2023-04-07
 date: 2023-04-06
 status: todo
