@@ -49,7 +49,7 @@ body {
 }
 
 .entry-list .metadata {
-  @apply flex justify-between max-w-md;
+  @apply flex justify-between;
 }
 
 .entry-list .date {

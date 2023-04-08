@@ -1,14 +1,14 @@
 <article class="$entry-type$">
     <section class="header">
-        <div class="flex justify-between items-baseline">
-            <h1>$title$</h1>
-            $if(status)$
-            <span class="status status-$status$">$status$</span>
-            $endif$
+        <div class="text-sm font-mono text-gray-600 dark:text-gray-300">
+            $date$ |
+            <span class="capitalize">$entry-type$<span>
         </div>
-        <div class="text-gray-700 dark:text-gray-300">
-        Posted on $date$
-        </div>
+        <h1 class="my-1">$title$</h1>
+        $if(status)$
+        <span class="status status-$status$">$status$</span>
+        $endif$
+    </div>
     </section>
     <hr>
     <section>
