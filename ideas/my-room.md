@@ -7,6 +7,8 @@ status: in-progress
 
 ### Update
 
+![A raytraced image of my room](/images/room.png)
+
 A demo is available at [https://room-ldgrp.vercel.app/](https://room-ldgrp.vercel.app/).
 
 After a few hours of playing around with Blender, I have a basic model
