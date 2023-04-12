@@ -27,6 +27,5 @@ Some features it could have
   based on the prompt.
 
 [apple-ux]: https://support.apple.com/en-au/guide/iphone/iphfe4809658/ios
-[apple-panoptic]https://machinelearning.apple.com/research/panoptic-segmentation
 [segment-anything]: https://segment-anything.com
 [developer-api]: https://canva.dev
