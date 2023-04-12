@@ -13,7 +13,7 @@ A demo is available at [https://room-ldgrp.vercel.app/](https://room-ldgrp.verce
 
 After a few hours of playing around with Blender, I have a basic model
 of my room. I'm still not happy with the lighting and I'm not sure how
-to get the model to look more realistic. I'm also need to spend some time
+to get the model to look more realistic. I also need to spend some time
 adding more detail to the meshes.
 
 ---
