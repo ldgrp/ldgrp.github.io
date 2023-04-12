@@ -121,19 +121,19 @@ footer a {
 }
 
 article h1 {
-  @apply text-3xl font-bold mt-6;
+  @apply text-3xl font-bold mt-6 mb-4;
 }
 
 article h2 {
-  @apply text-2xl font-bold mt-6;
+  @apply text-2xl font-bold mt-6 mb-4;
 }
 
 article h3 {
-  @apply text-xl font-bold;
+  @apply text-xl font-bold mb-4;
 }
 
 article p {
-  @apply mb-5;
+  @apply mb-6;
 }
 
 article a {
