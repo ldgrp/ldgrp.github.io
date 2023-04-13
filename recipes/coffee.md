@@ -11,6 +11,8 @@ The recipes below document how I prepare my coffee at home.
 In general, I prefer to use an Aeropress for ease of use and consistency.
 When I'm craving a milk-based coffee, I use a Moka Pot with a Bellman Stovetop Steamer.
 
+![A homemade oat flat white](/images/coffee.webp){ width=550px height=430px }
+
 ### Gear
 
 - Aeropress
