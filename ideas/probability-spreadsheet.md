@@ -1,23 +1,14 @@
 ---
 title: Probability spreadsheet
-last-edited: 2023-04-11
+last-edited: 2023-04-19
 date: 2023-04-11
-status: todo
+status: in-progress
 ---
 
-### Update
+[![A screenshot from the probability spreadsheet demo](/images/probability-spreadsheet.webp){ width=350 height=388 }][demo]
 
-After thinking about this problem for while, I think a hybrid notepad/calculator
-(like [Soulver][soulver]) would be a better solution than a spreadsheet.
-Natural language input would be a nice-to-have, but not essential. It would be
-especially challenging to define a grammar for probability distributions.
-
-An range estimate like "5 to 10 days" could be interpreted as a triangular
-distribution with a mean of 7.5 days. The calculator part would then show a 
-sparkline of the distribution, with an option to change the distribution type
-and the parameters of the distribution.
-
-![A mockup of the probability notepad](/images/probability-notepad.png){ width=766 height=448 }
+A _very_ rough demo of the probability spreadsheet is available [here][demo].
+The source code is available [on GitHub][source].
 
 ---
 
@@ -68,6 +59,35 @@ be able to propagate uncertainty through the graph.
 
 This is a problem that I've encountered more than enough times now.
 
+---
+
+### Update
+
+#### 19 April 2023
+
+I've pivoted back to the original idea of a spreadsheet. I think it's much easier
+to suspend state and do "what-if" analysis in a spreadsheet. I've also decided
+to _not_ support natural language input. I've since discovered these wonderful
+tools:
+
+- [Frink](https://futureboy.us/frinkdocs/)
+- [insect.sh](https://insect.sh/)
+
+
+#### 13 April 2023
+
+After thinking about this problem for while, I think a hybrid notepad/calculator
+(like [Soulver][soulver]) would be a better solution than a spreadsheet.
+Natural language input would be a nice-to-have, but not essential. It would be
+especially challenging to define a grammar for probability distributions.
+
+An range estimate like "5 to 10 days" could be interpreted as a triangular
+distribution with a mean of 7.5 days. The calculator part would then show a 
+sparkline of the distribution, with an option to change the distribution type
+and the parameters of the distribution.
+
+![A mockup of the probability notepad](/images/probability-notepad.png){ width=766 height=448 }
+
 ### Related Work
 
 - [Build Your Own Probabilty Monads][probability-monads]
@@ -89,3 +109,5 @@ This is a problem that I've encountered more than enough times now.
 [help]: https://www.studyassist.gov.au/help-loans
 [causal-app]: https://causal.app/
 [soulver]: https://soulver.app/
+[demo]: https://probability-spreadsheet.vercel.app/
+[source]: https://github.com/ldgrp/probability-spreadsheet

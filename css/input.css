@@ -121,7 +121,7 @@ footer a {
 }
 
 article h1 {
-  @apply text-3xl font-bold mt-6 mb-4;
+  @apply text-3xl font-bold tracking-tight mt-6 mb-4;
 }
 
 article h2 {
@@ -130,6 +130,10 @@ article h2 {
 
 article h3 {
   @apply text-xl font-bold mb-4;
+}
+
+article h4 {
+  @apply text-base font-bold mb-4 leading-none;
 }
 
 article p {
@@ -141,7 +145,7 @@ article a {
 }
 
 article hr {
-  @apply my-8 h-px border-0 bg-gray-200 dark:bg-zinc-700;
+  @apply my-8 h-px border-0 bg-zinc-300 dark:bg-zinc-700;
 }
 
 article ul,
