@@ -8,6 +8,10 @@ import System.FilePath.Posix  ((</>))
 --------------------------------------------------------------------------------
 main :: IO ()
 main = hakyll $ do
+    match "fonts/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "images/*" $ do
         route   idRoute
         compile copyFileCompiler
