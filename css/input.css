@@ -41,7 +41,7 @@
 }
 
 body {
-  @apply flex flex-col min-h-screen p-4 sm:p-4 max-w-xl mx-auto text-gray-900 bg-amber-50 bg-opacity-100 dark:bg-zinc-950 dark:text-gray-200 duration-100
+  @apply flex flex-col min-h-screen p-4 sm:p-4 max-w-2xl mx-auto text-gray-900 bg-amber-50 bg-opacity-100 dark:bg-zinc-950 dark:text-gray-200 duration-100
 }
 
 .entry-list {
