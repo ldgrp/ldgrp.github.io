@@ -40,8 +40,6 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: Refresh cabal package index
-      run: cabal update
     - name: Build
       run: cabal build
     - name: Download tailwind
