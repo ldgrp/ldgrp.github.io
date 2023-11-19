@@ -3,6 +3,7 @@ title: An OpenTelemetry receiver for Elastic APM
 last-edited: 2023-08-07
 date: 2023-08-06
 status: done
+meta-img: https://github.com/ldgrp/elasticapmreceiver/raw/main/docs/jaeger_sample.png
 ---
 
 An experimental OpenTelemetry receiver can be found at [https://github.com/ldgrp/elasticapmreceiver][repo].

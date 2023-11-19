@@ -4,7 +4,7 @@ title: Leo Orpilla III
 ::: { .resume }
 ## Currently
 ::: { .currently }
-Junior Software Engineer at [Displayr][displayr]
+Software Engineer at [Displayr][displayr]
 ::: 
 ## Links 
 ::: { .badges }
@@ -37,6 +37,7 @@ $partial("templates/post-list.html")$
 :::
 
 ## [Ideas][ideas]
+
 ::: { .posts }
 $partial("templates/ideas-list.html")$
 :::

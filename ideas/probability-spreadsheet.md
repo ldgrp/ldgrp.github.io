@@ -3,6 +3,7 @@ title: Probability spreadsheet
 last-edited: 2023-04-19
 date: 2023-04-11
 status: in-progress
+meta-img: /images/probability-spreadsheet.webp
 ---
 
 [![A screenshot from the probability spreadsheet demo](/images/probability-spreadsheet.webp){ width=350 height=388 }][demo]

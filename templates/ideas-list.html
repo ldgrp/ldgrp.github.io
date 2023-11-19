@@ -1,6 +1,15 @@
-<ul class="entry-list">
+<ul class="entry-list grid grid-cols-2 space-x-0 space-y-0 gap-4">
     $for(ideas)$
-        <li>
+        <li class="group">
+            <div>
+                <a href="$url$">
+                $if(meta-img)$
+                <img src="$meta-img$" class="group-hover:brightness-100 group-hover:grayscale-0">
+                $else$
+                <div class="img-placeholder group-hover:brightness-100 group-hover:grayscale-0"></div>
+                $endif$
+                </a>
+            </div>
             <div class="metadata">
                 <span class="date">$date$</span>
                 $if(status)$

@@ -3,6 +3,7 @@ title: Visualising my room with a 3D model
 date: 2023-04-02
 last-edited: 2023-04-09
 status: in-progress
+meta-img: /images/room.png
 ---
 
 ### Update

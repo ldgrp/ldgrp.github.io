@@ -29,6 +29,10 @@ main = hakyll $ do
         compile $ pandocCompiler
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
+    
+    match "ideas/external/*.md" $ do
+        route   $ metadataRoute urlRoute
+        compile pandocCompiler
 
     match "ideas/*.md" $ do
         route $ setExtension "html"
@@ -36,7 +40,7 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/post.html"    ideaCtx
                 >>= loadAndApplyTemplate "templates/default.html" ideaCtx
                 >>= relativizeUrls
-    
+
     match "posts/external/*.md" $ do
         route   $ metadataRoute urlRoute
         compile pandocCompiler
@@ -101,9 +105,13 @@ posts = do
     y <- loadAll "posts/external/*.md"
     pure (x ++ y)
 
-ideas = loadAll "ideas/*.md"
+ideas = do
+    x <- loadAll "ideas/*.md"
+    y <- loadAll "ideas/external/*.md"
+    pure (x ++ y)
     
 --------------------------------------------------------------------------------
+
 archiveCtx :: Context String
 archiveCtx =
     listField "posts" postCtx (recentFirst =<< posts) `mappend`

@@ -4,6 +4,7 @@ date: 2022-10-12
 last-edited: 2022-11-12
 status: done
 tags: coffee, nfc
+meta-img: /images/nfc-coffee-timer.jpeg
 ---
 
 iOS Shortcuts allow users to create Personal Automations that run on [NFC triggers][nfc-trigger].

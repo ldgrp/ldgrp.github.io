@@ -48,6 +48,14 @@ body {
   @apply list-none m-0 space-y-2 max-w-xl;
 }
 
+.entry-list img, .entry-list .img-placeholder {
+  @apply h-[150px] w-full object-cover rounded-lg my-3 filter grayscale brightness-75;
+}
+
+.entry-list .img-placeholder {
+  @apply bg-yellow-300 dark:bg-yellow-500 grayscale-0 brightness-75;
+}
+
 .entry-list .metadata {
   @apply flex justify-between;
 }
@@ -57,7 +65,7 @@ body {
 }
 
 .entry-list .title {
-  @apply text-inherit text-lg decoration-dotted underline hover:underline
+  @apply text-inherit text-lg decoration-dotted underline hover:decoration-solid
 }
 
 footer a {
@@ -76,7 +84,7 @@ footer a {
 }
 
 .badges li {
-  @apply py-1 px-2 text-sm font-medium rounded border border-gray-500 dark:border-gray-400 hover:bg-amber-100 dark:hover:bg-gray-800 hover:cursor-pointer;
+  @apply py-1 px-2 text-sm font-medium rounded border border-gray-500 dark:border-gray-400 hover:bg-amber-100 dark:hover:bg-zinc-800 hover:cursor-pointer;
 }
 
 .status {
