@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "devDependencies": {
-    "tailwindcss": "^3.3.1"
+    "tailwindcss": "^3.3.5"
   },
   "scripts": {
     "build": "tailwindcss -i css/input.css -o css/style.css",
