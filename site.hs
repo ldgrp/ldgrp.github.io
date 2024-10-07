@@ -73,7 +73,6 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/default.html" ideasCtx
                 >>= relativizeUrls
 
-
     match "index.md" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
@@ -82,6 +81,10 @@ main = hakyll $ do
                 >>= relativizeUrls
 
     match "templates/*" $ compile templateBodyCompiler
+
+    match "posts/observable/dist/**" $ do
+        route $ gsubRoute "posts/observable/dist/" $ const "posts/"
+        compile $ copyFileCompiler
 
 --------------------------------------------------------------------------------
 entryCtx :: String -> Context String
