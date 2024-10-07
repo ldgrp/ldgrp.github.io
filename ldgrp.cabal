@@ -6,7 +6,7 @@ cabal-version:      >= 1.10
 executable site
   main-is:          site.hs
   build-depends:    base >= 4.16 && < 5
-                  , hakyll == 4.15.*
+                  , hakyll == 4.16.*
                   , fsnotify == 0.4.0.0
                   , filepath == 1.4.*
   ghc-options:      -threaded
