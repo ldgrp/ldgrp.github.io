@@ -4,7 +4,7 @@ title: Leo Orpilla III
 ::: { .resume }
 ## Currently
 ::: { .currently }
-Software Engineer at [Displayr][displayr]
+Senior Software Engineer at [Hall][hall]
 ::: 
 ## Links 
 ::: { .badges }
@@ -51,6 +51,6 @@ $partial("templates/ideas-list.html")$
 [twitter]: https://twitter.com/_ldgrp
 [spotify]: https://open.spotify.com/user/lorpilla3
 [strava]: https://www.strava.com/athletes/97171311
-[displayr]: https://displayr.com/
+[hall]: https://usehall.com/
 [ideas]: ideas.html
 [observable]: https://observablehq.com/@ldgrp
