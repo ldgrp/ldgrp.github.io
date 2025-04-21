@@ -65,7 +65,7 @@ body {
 }
 
 .entry-list .title {
-  @apply text-inherit text-lg decoration-dotted underline hover:decoration-solid
+  @apply text-inherit text-lg decoration-dotted underline underline-offset-2 hover:decoration-solid
 }
 
 footer a {
@@ -195,7 +195,7 @@ article td {
 }
 
 article img {
-  @apply mx-auto rounded-lg;
+  @apply mx-auto;
 }
 
 article figcaption {

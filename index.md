@@ -21,28 +21,24 @@ Senior Software Engineer at [Hall][hall]
 - Functional programming
 - Real-time collaboration
 - [Coffee][coffee]
-- Cooking
-- Baking
-- [Music][spotify]
+- Cooking / Baking
 - [Running][strava]
 - [Cycling][strava]
+- Snowboarding
 - Guitar
 - 3D printing
 :::
 
+## Projects
+::: { .posts }
+$partial("templates/ideas-list.html")$
+:::
 
 ## Posts
 ::: { .posts }
 $partial("templates/post-list.html")$
 :::
-
-## [Ideas][ideas]
-
-::: { .posts }
-$partial("templates/ideas-list.html")$
 :::
-:::
-
 
 [email]: mailto:dev@ldgrp.me
 [github]: https://github.com/ldgrp
