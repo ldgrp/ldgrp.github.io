@@ -2,8 +2,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 import Data.Maybe (fromMaybe)
 import Data.Monoid (mappend)
+import qualified Data.Text as T
 import Hakyll
 import System.FilePath.Posix  ((</>))
+import System.Process (proc, readCreateProcess)
+
 
 --------------------------------------------------------------------------------
 main :: IO ()
@@ -49,6 +52,15 @@ main = hakyll $ do
         route removeDateRoute
         compile $ pandocCompiler
                 >>= loadAndApplyTemplate "templates/post.html"    postCtx
+                >>= saveSnapshot "content"
+                >>= loadAndApplyTemplate "templates/default.html" postCtx
+                >>= relativizeUrls
+
+    match "posts/*.typ" $ do
+        route removeDateRoute
+        compile $ typstCompiler
+                >>= loadAndApplyTemplate "templates/post.html"    postCtx
+                >>= saveSnapshot "content"
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
                 >>= relativizeUrls
 
@@ -84,6 +96,35 @@ main = hakyll $ do
     match "templates/*" $ compile templateBodyCompiler
 
 --------------------------------------------------------------------------------
+typstArgs :: Compiler [String]
+typstArgs = do
+    ident <- getUnderlying
+    meta  <- getMetadata ident
+    return ([ "compile", "-", "-"
+            , "--format", "html", "--features", "html"
+            , "--root", "." ] ++ metadataInputs meta)
+    
+-- Compile a Typst source file to HTML via native Typst HTML export.
+typstCompiler :: Compiler (Item String)
+typstCompiler = do
+    args <- typstArgs
+    src <- itemBody <$> getResourceBody
+    out <- unsafeCompiler $ readCreateProcess (proc "typst" args) src
+    makeItem (extractBody out)
+
+metadataInputs :: Metadata -> [String]
+metadataInputs meta =
+    concat [ ["--input", k ++ "=" ++ v]
+           | k <- ["title", "date", "last-edited", "status"]
+           , Just v <- [lookupString k meta] ]
+
+extractBody :: String -> String
+extractBody = T.unpack . inner . T.pack
+  where
+    inner t =
+      let afterOpen = T.drop 1 . snd . T.breakOn ">" . snd $ T.breakOn "<body" t
+      in fst $ T.breakOn "</body>" afterOpen
+
 entryCtx :: String -> Context String
 entryCtx entryType =
     constField "entry-type" entryType `mappend`
@@ -103,7 +144,8 @@ recipeCtx = entryCtx "recipe"
 posts = do
     x <- loadAll "posts/*.md"
     y <- loadAll "posts/external/*.md"
-    pure (x ++ y)
+    z <- loadAll "posts/*.typ"
+    pure (x ++ y ++ z)
 
 ideas = do
     x <- loadAll "ideas/*.md"
