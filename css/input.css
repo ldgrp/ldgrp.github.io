@@ -1,4 +1,23 @@
-@tailwind base;
+@import "tailwindcss";
+
+@custom-variant dark {
+  &:where(.dark, .dark *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:not(.light, .light *)) {
+      @slot;
+    }
+  }
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Roboto Slab", ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
+}
+
 
 @font-face {
   font-family: 'icomoon';
@@ -41,7 +60,7 @@
 }
 
 body {
-  @apply flex flex-col min-h-screen p-4 sm:p-4 max-w-2xl mx-auto text-slate-800 bg-amber-50 bg-opacity-70 dark:bg-zinc-950 dark:bg-opacity-100 dark:text-gray-200 duration-100
+  @apply flex flex-col min-h-screen p-4 sm:p-4 max-w-2xl mx-auto text-slate-800 bg-amber-50/70 dark:bg-zinc-950 dark:text-gray-200 duration-100
 }
 
 .entry-list {
@@ -49,7 +68,7 @@ body {
 }
 
 .entry-list img, .entry-list .img-placeholder {
-  @apply h-[150px] w-full object-cover rounded-lg my-3 filter grayscale brightness-75;
+  @apply h-[150px] w-full object-cover rounded-lg my-3 grayscale brightness-75;
 }
 
 .entry-list .img-placeholder {
@@ -103,11 +122,11 @@ footer a {
   @apply bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300;
 }
 
-.resume { 
+.resume {
   @apply max-w-2xl mx-auto my-10 grid grid-cols-6 gap-2 sm:gap-4;
 }
 
-.resume > h2 { 
+.resume > h2 {
   @apply font-medium text-sm mt-4 sm:mt-0;
 }
 
@@ -201,6 +220,3 @@ article img {
 article figcaption {
   @apply mt-2 mb-5 text-sm text-center text-gray-500 dark:text-gray-400;
 }
-
-@tailwind components;
-@tailwind utilities;

@@ -1,0 +1,3 @@
+packages: .
+
+with-compiler: ghc-9.12.4

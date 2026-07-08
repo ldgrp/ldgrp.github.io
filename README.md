@@ -6,9 +6,13 @@ My personal website built with [Hakyll][hakyll] + [Pandoc][pandoc] and [Tailwind
 Hosted on [Github Pages][github-pages].
 
 ## Requirements
-- GHC 9.2.4
-- Cabal 3.6.2.0
-- npm 8.10.0
+
+Tooling (GHC, Cabal, and the standalone Tailwind CLI) is managed by
+[mise](https://mise.jdx.dev/).
+
+```bash
+mise install
+```
 
 ## Build
 
@@ -24,10 +28,10 @@ cabal exec site build
 ```
 
 ```bash
-# Build CSS with Tailwind CLI
-npm run build 
+# Build CSS with the Tailwind CLI
+tailwindcss -i css/input.css -o css/style.css
 # Alternatively use watch to automatically rebuild on change
-# npm run watch
+# tailwindcss -i css/input.css -o css/style.css --watch
 ```
 
 ### Windows: withFile: invalid argument (invalid character)

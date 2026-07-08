@@ -38,16 +38,11 @@
     <link rel="manifest" href="/images/site.webmanifest" />
     <!-- Dark mode -->
     <script>
-      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-      if (
-        localStorage.getItem("color-theme") === "dark" ||
-        (!("color-theme" in localStorage) &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-      ) {
-        document.documentElement.classList.add("dark");
-      } else {
-        document.documentElement.classList.remove("dark");
-      }
+      (function () {
+        var theme = localStorage.getItem("color-theme");
+        if (theme === "dark") document.documentElement.classList.add("dark");
+        else if (theme === "light") document.documentElement.classList.add("light");
+      })();
     </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJRJTNXBZP"></script>
