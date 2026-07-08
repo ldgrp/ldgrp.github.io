@@ -12,10 +12,18 @@
     $endif$
     <meta property="og:type" content="article" />
     <meta name="og:title" content="$title$" />
+    <meta property="og:url" content="$root$$url$" />
     <title>$title$</title>
     $if(keywords)$
     <meta name="keywords" content="$keywords$" />
     $endif$
+    <link rel="canonical" href="$root$$url$" />
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="Leo Orpilla III"
+      href="/atom.xml"
+    />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/syntax.css" />
     <link
