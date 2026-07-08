@@ -190,7 +190,7 @@ entryCtx :: String -> Context String
 entryCtx entryType =
     constField "entry-type" entryType `mappend`
     dateField "date" "%d %b %Y" `mappend`
-    siteCtx
+    defaultContext
 
 postCtx :: Context String
 postCtx = entryCtx "post"
@@ -220,20 +220,20 @@ archiveCtx =
     listField "posts" postCtx (recentFirst =<< posts) `mappend`
     listField "ideas" ideaCtx (recentFirst =<< ideas) `mappend`
     constField "title" "Archive" `mappend`
-    siteCtx
+    defaultContext
     
 indexCtx :: Context String
 indexCtx =
     listField "posts" postCtx (recentFirst =<< posts) `mappend`
     listField "ideas" ideaCtx (recentFirst =<< ideas) `mappend`
     constField "title" "Leo Orpilla III" `mappend`
-    siteCtx
+    defaultContext
 
 ideasCtx :: Context String
 ideasCtx =
     listField "ideas" ideaCtx (recentFirst =<< ideas) `mappend`
     constField "title" "Ideas" `mappend`
-    siteCtx
+    defaultContext
 
 --------------------------------------------------------------------------------
 removeDateRoute :: Routes
