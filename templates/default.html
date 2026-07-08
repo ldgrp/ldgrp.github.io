@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -36,14 +36,6 @@
       href="/images/favicon-16x16.png"
     />
     <link rel="manifest" href="/images/site.webmanifest" />
-    <!-- Dark mode -->
-    <script>
-      (function () {
-        var theme = localStorage.getItem("color-theme");
-        if (theme === "dark") document.documentElement.classList.add("dark");
-        else if (theme === "light") document.documentElement.classList.add("light");
-      })();
-    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TJRJTNXBZP"></script>
     <script>
@@ -59,6 +51,5 @@
 
     <main>$body$</main>
     $partial("templates/footer.html")$
-    <script src="/scripts/darkmode.js"></script>
   </body>
 </html>
