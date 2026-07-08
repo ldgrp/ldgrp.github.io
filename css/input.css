@@ -62,24 +62,12 @@ body {
   @apply list-none m-0 space-y-2 max-w-xl;
 }
 
-.entry-list img, .entry-list .img-placeholder {
-  @apply h-[150px] w-full object-cover rounded-lg my-3 grayscale brightness-75;
-}
-
-.entry-list .img-placeholder {
-  @apply bg-yellow-300 dark:bg-yellow-500 grayscale-0 brightness-75;
-}
-
 .entry-list .metadata {
   @apply flex justify-between;
 }
 
 .entry-list .date {
   @apply text-gray-700 dark:text-gray-300 font-mono text-sm;
-}
-
-.entry-list .title {
-  @apply text-inherit text-lg decoration-dotted underline underline-offset-2 hover:decoration-solid
 }
 
 footer a {
@@ -143,7 +131,7 @@ footer a {
 }
 
 article h1 {
-  @apply text-3xl font-bold tracking-tight mt-6 mb-4;
+  @apply text-3xl sm:text-4xl font-bold mt-6 mb-4;
 }
 
 article h2 {
@@ -159,7 +147,7 @@ article h4 {
 }
 
 article p {
-  @apply mb-6;
+  @apply mb-4;
 }
 
 article a {

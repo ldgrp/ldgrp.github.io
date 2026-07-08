@@ -1,16 +1,15 @@
 <article class="$entry-type$">
-    <section class="header">
+    <section class="header mt-4 mb-6">
+        <h1 class="mr-8 sm:mr-10">$title$</h1>
+        <div class="flex gap-4 -mt-3">
         <div class="text-sm font-mono text-gray-600 dark:text-gray-300">
-            $date$ |
-            <span class="capitalize">$entry-type$<span>
+            Posted on $date$
         </div>
-        <h1 class="my-1">$title$</h1>
         $if(status)$
         <span class="status status-$status$">$status$</span>
         $endif$
-    </div>
+        </div>
     </section>
-    <hr>
     <section>
         $body$
         $if(last-edited)$

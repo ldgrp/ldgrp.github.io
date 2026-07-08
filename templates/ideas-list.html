@@ -1,19 +1,17 @@
 <ul class="entry-list grid grid-cols-2 space-x-0 space-y-0 gap-4">
     $for(ideas)$
         <li class="group">
-            <div>
                 <a href="$url$">
                 $if(meta-img)$
-                <img src="$meta-img$" class="group-hover:brightness-100 group-hover:grayscale-0">
+                <img src="$meta-img$" class="h-[150px] w-full object-cover rounded-lg my-3 grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0">
                 $else$
-                <div class="img-placeholder group-hover:brightness-100 group-hover:grayscale-0"></div>
+                <div class="h-[150px] w-full object-cover rounded-lg my-3 bg-yellow-300 dark:bg-yellow-500 grayscale-0 brightness-75 group-hover:brightness-100 group-hover:grayscale-0"></div>
                 $endif$
                 </a>
-            </div>
             <div class="metadata">
                 <span class="date">$date$</span>
             </div>
-            <a class="title group-hover:decoration-solid" href="$url$">$title$</a>
+            <a class="text-inherit text-lg decoration-dotted underline underline-offset-2 hover:decoration-solid group-hover:decoration-solid" href="$url$">$title$</a>
         </li>
     $endfor$
 </ul>
