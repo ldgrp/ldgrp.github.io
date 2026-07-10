@@ -263,7 +263,14 @@ entryCtx :: String -> Context String
 entryCtx entryType =
     constField "entry-type" entryType `mappend`
     dateField "date" "%d %b %Y" `mappend`
+    readingTimeField `mappend`
     defaultContext
+
+readingTimeField :: Context String
+readingTimeField = field "reading-time" $ \item -> do
+    let wordCount = length (words (TagSoup.innerText (parseTags (itemBody item))))
+        minutes   = max 1 (ceiling (fromIntegral wordCount / 220 :: Double)) :: Int
+    return (show minutes)
 
 postCtx :: Context String
 postCtx = entryCtx "post"

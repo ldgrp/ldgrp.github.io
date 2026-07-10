@@ -1,9 +1,9 @@
 <article class="$entry-type$">
     <section class="header mt-4 mb-6">
         <h1 class="mr-8 sm:mr-10">$title$</h1>
-        <div class="flex gap-4 -mt-3">
+        <div class="flex gap-4 -mt-1">
         <div class="text-sm font-mono text-gray-600 dark:text-gray-300">
-            Posted on $date$
+            Posted on $date$ · $reading-time$ min read
         </div>
         $if(status)$
         <span class="status status-$status$">$status$</span>
@@ -13,7 +13,9 @@
     <section class="post-body">
         $body$
         $if(last-edited)$
-        Last modified $last-edited$
+        <div class="my-6">
+        <span class="italic text-sm">Last modified $last-edited$</span>
+        </div>
         $endif$
     </section>
 </article>
