@@ -6,30 +6,28 @@
   color-scheme: dark;
 }
 
-article :is(h1, h2, h3, h4) {
-  scroll-margin-top: 1.5rem;
-}
-
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+  --font-sans:
+    "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif: "Roboto Slab", ui-serif, Georgia, Cambria, "Times New Roman",
-    Times, serif;
+  --font-serif:
+    "Roboto Slab", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
-
 
 @font-face {
-  font-family: 'icomoon';
-  src: url('/fonts/icomoon.woff') format('woff'),
-       url('/fonts/icomoon.svg') format('svg');
+  font-family: "icomoon";
+  src:
+    url("/fonts/icomoon.woff") format("woff"),
+    url("/fonts/icomoon.svg") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="icon-"],
+[class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: "icomoon" !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -59,7 +57,7 @@ article :is(h1, h2, h3, h4) {
 }
 
 body {
-  @apply flex flex-col min-h-screen p-4 sm:p-4 max-w-2xl mx-auto text-slate-800 bg-amber-50/70 dark:bg-zinc-950 dark:text-gray-200 duration-100
+  @apply flex flex-col min-h-screen p-4 sm:p-4 max-w-2xl mx-auto text-slate-800 bg-amber-50/70 dark:bg-zinc-950 dark:text-gray-200 duration-100;
 }
 
 .entry-list {
@@ -134,6 +132,14 @@ footer a {
   @apply text-yellow-600 dark:text-yellow-500 hover:underline font-medium;
 }
 
+article {
+  @apply text-base;
+}
+
+article :is(h1, h2, h3, h4) {
+  @apply mt-8 scroll-m-6;
+}
+
 article h1 {
   @apply text-3xl sm:text-4xl font-bold mt-6 mb-4;
 }
@@ -151,11 +157,11 @@ article h4 {
 }
 
 article p {
-  @apply mb-4;
+  @apply mt-6 leading-7;
 }
 
 article a {
-  @apply font-medium text-yellow-600 dark:text-yellow-500 underline hover:no-underline;
+  @apply font-medium text-yellow-600 dark:text-yellow-500 underline underline-offset-2;
 }
 
 article hr {
@@ -164,7 +170,7 @@ article hr {
 
 article ul,
 article ol {
-  @apply mb-5 space-y-1 list-inside;
+  @apply my-6 ml-6 space-y-2;
 }
 
 article ul ul,
@@ -193,17 +199,50 @@ article tr {
 }
 
 article th {
-  @apply py-3 px-6
+  @apply py-3 px-6;
 }
 
 article td {
-  @apply py-4 px-6
+  @apply py-4 px-6;
+}
+
+article figure {
+  @apply my-6;
 }
 
 article img {
-  @apply mx-auto;
+  @apply mx-auto my-2;
 }
 
 article figcaption {
   @apply mt-2 mb-5 text-sm text-center text-gray-500 dark:text-gray-400;
+}
+
+p > code,
+li > code {
+  @apply bg-neutral-800 rounded px-[0.3rem] py-[0.2rem] font-mono text-sm;
+}
+
+div.sourceCode {
+  @apply my-8 bg-neutral-950 border border-neutral-800 rounded-lg text-xs overflow-hidden;
+}
+
+@media screen {
+  div.sourceCode pre {
+    @apply overflow-x-auto p-6;
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-zinc-700) transparent;
+  }
+  div.sourceCode pre::-webkit-scrollbar {
+    @apply h-2;
+  }
+  div.sourceCode pre::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  div.sourceCode pre::-webkit-scrollbar-thumb {
+    @apply rounded bg-zinc-700;
+  }
+  div.sourceCode pre::-webkit-scrollbar-thumb:hover {
+    @apply bg-zinc-500;
+  }
 }
