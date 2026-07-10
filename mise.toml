@@ -1,3 +1,7 @@
+[settings]
+# Route `ghc` to the ghcup backend, not conda
+disable_backends = ["conda"]
+
 [tools]
 ghc = "9.12.4"
 cabal = "3.14.2.0"
