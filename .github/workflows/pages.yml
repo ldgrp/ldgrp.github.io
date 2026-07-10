@@ -42,16 +42,13 @@ jobs:
         ghc-version: ${{ env.GHC_VERSION }}
         cabal-version: ${{ env.CABAL_VERSION }}
 
-    - name: Cache cabal build
+    - name: Cache cabal dependencies
       uses: actions/cache@v4
       with:
-        path: |
-          ~/.cabal
-          dist-newstyle
-        key: ${{ runner.os }}-cabal-${{ env.GHC_VERSION }}-${{ hashFiles('**/*.cabal', 'cabal.project', 'site.hs') }}
+        path: ~/.cabal
+        key: ${{ runner.os }}-cabaldeps-${{ env.GHC_VERSION }}-${{ hashFiles('**/*.cabal', 'cabal.project') }}
         restore-keys: |
-          ${{ runner.os }}-cabal-${{ env.GHC_VERSION }}-
-          ${{ runner.os }}-cabal-
+          ${{ runner.os }}-cabaldeps-${{ env.GHC_VERSION }}-
 
     - name: Build
       run: cabal build
