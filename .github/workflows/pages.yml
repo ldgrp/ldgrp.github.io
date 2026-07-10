@@ -5,7 +5,7 @@ on:
   push:
     branches: ["main"]
 
-  # Allows you to run this workflow mannually from the Actions tab
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -19,59 +19,32 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
-env:
-  GHC_VERSION: '9.12.4'
-  CABAL_VERSION: '3.14.2.0'
-
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Cache GHC toolchain
-      uses: actions/cache@v4
-      with:
-        path: |
-          /usr/local/.ghcup/ghc/${{ env.GHC_VERSION }}
-          ~/.ghcup/ghc/${{ env.GHC_VERSION }}
-        key: ${{ runner.os }}-ghcup-ghc-${{ env.GHC_VERSION }}
+      - uses: jdx/mise-action@v2
+        with:
+          cache: true
 
-    - uses: haskell-actions/setup@v2
-      with:
-        ghc-version: ${{ env.GHC_VERSION }}
-        cabal-version: ${{ env.CABAL_VERSION }}
+      - name: Cache cabal store
+        uses: actions/cache@v4
+        with:
+          path: ~/.cabal
+          key: ${{ runner.os }}-cabal-${{ hashFiles('**/*.cabal', 'cabal.project') }}
+          restore-keys: |
+            ${{ runner.os }}-cabal-
 
-    - name: Cache cabal dependencies
-      uses: actions/cache@v4
-      with:
-        path: ~/.cabal
-        key: ${{ runner.os }}-cabaldeps-${{ env.GHC_VERSION }}-${{ hashFiles('**/*.cabal', 'cabal.project') }}
-        restore-keys: |
-          ${{ runner.os }}-cabaldeps-${{ env.GHC_VERSION }}-
+      - name: Update package index
+        run: cabal update
 
-    - name: Build
-      run: cabal build
+      - name: Generate site
+        run: mise run generate
 
-    - name: Cache tailwind binary
-      id: tailwind-cache
-      uses: actions/cache@v4
-      with:
-        path: tailwindcss
-        key: ${{ runner.os }}-tailwind-v4.3.2
-    - name: Download tailwind
-      if: steps.tailwind-cache.outputs.cache-hit != 'true'
-      run: |
-        curl -sLO https://github.com/tailwindlabs/tailwindcss/releases/download/v4.3.2/tailwindcss-linux-x64
-        chmod +x tailwindcss-linux-x64
-        mv tailwindcss-linux-x64 tailwindcss
-
-    - name: Compile and minify CSS for production
-      run: ./tailwindcss -i css/input.css -o css/style.css --minify
-    - name: Generate site
-      run: cabal exec site build
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
 
   # Deployment job
   deploy:

@@ -3,3 +3,26 @@ ghc = "9.12.4"
 cabal = "3.14.2.0"
 "aqua:tailwindlabs/tailwindcss" = "4.3.2"
 typst = "0.15.0"
+
+[tasks.build]
+description = "Compile Hakyll"
+run = "cabal build"
+
+[tasks.css]
+description = "Compile and minify Tailwind CSS"
+run = "tailwindcss -i css/input.css -o css/style.css --minify"
+
+[tasks.generate]
+description = "Generate static site generator"
+depends = ["build", "css"]
+run = "cabal exec site build"
+
+[tasks.watch]
+description = "Serve the site at http://localhost:8000, rebuilding HTML + CSS on change"
+depends = ["build"]
+run = """
+tailwindcss -i css/input.css -o css/style.css --watch &
+tw=$!
+trap "kill $tw 2>/dev/null" EXIT INT TERM
+cabal exec site watch
+"""
