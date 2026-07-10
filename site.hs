@@ -201,11 +201,14 @@ tocField = field "toc" $ \item -> do
 
 headingCtx :: Int -> Context Heading
 headingCtx minLevel =
-    field "heading-id"     (return . headingId . itemBody) `mappend`
-    field "heading-text"   (return . escapeHtml . headingText . itemBody) `mappend`
-    field "heading-indent" (return . indent . itemBody)
+    field "heading-id"    (return . headingId . itemBody) `mappend`
+    field "heading-text"  (return . escapeHtml . headingText . itemBody) `mappend`
+    field "heading-depth" (return . depth . itemBody)
   where
-    indent h = "pl-" ++ show (min 9 (3 * (headingLevel h - minLevel + 1)))
+    -- Emit the heading's nesting depth (1, 2, 3, …) as plain data; the TOC
+    -- template feeds it to a CSS custom property and CSS does the indenting,
+    -- so no per-level utility classes have to survive Tailwind tree-shaking.
+    depth h = show (min 3 (headingLevel h - minLevel + 1))
 
 extractHeadings :: String -> (String, [Heading])
 extractHeadings html = (TagSoup.renderTags tags, headings)

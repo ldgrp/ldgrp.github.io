@@ -16,7 +16,8 @@ $if(has-toc)$
         <a
           href="#$heading-id$"
           data-toc-link
-          class="$heading-indent$ block py-0.5 -ml-px border-l border-transparent truncate text-zinc-500 dark:text-zinc-400 hover:text-yellow-600 dark:hover:text-yellow-500 data-active:text-yellow-600 dark:data-active:text-yellow-500 data-active:border-yellow-600 dark:data-active:border-yellow-500"
+          style="--toc-depth: $heading-depth$"
+          class="pl-[calc(var(--toc-depth)*0.75rem)] block py-0.5 -ml-px border-l border-transparent truncate text-zinc-500 dark:text-zinc-400 hover:text-yellow-600 dark:hover:text-yellow-500 data-active:text-yellow-600 dark:data-active:text-yellow-500 data-active:border-yellow-600 dark:data-active:border-yellow-500"
           >$heading-text$</a
         >
       </li>
