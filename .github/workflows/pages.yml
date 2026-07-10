@@ -5,6 +5,10 @@ on:
   push:
     branches: ["main"]
 
+  # Keep the Actions caches warm.
+  schedule:
+    - cron: "0 6 * * 1,4"
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -22,6 +26,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    env:
+      CABAL_DIR: /home/runner/.cabal
     steps:
       - uses: actions/checkout@v4
 
@@ -29,10 +35,10 @@ jobs:
         with:
           cache: true
 
-      - name: Cache cabal store
+      - name: Cache cabal (deps + index)
         uses: actions/cache@v4
         with:
-          path: ~/.cabal
+          path: ${{ env.CABAL_DIR }}
           key: ${{ runner.os }}-cabal-${{ hashFiles('**/*.cabal', 'cabal.project') }}
           restore-keys: |
             ${{ runner.os }}-cabal-
@@ -48,6 +54,7 @@ jobs:
 
   # Deployment job
   deploy:
+    if: github.event_name != 'schedule'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
