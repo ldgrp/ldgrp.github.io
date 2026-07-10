@@ -1,12 +1,15 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
-import Data.List (isSuffixOf)
+import Data.Char (digitToInt, isAlphaNum, toLower)
+import Data.List (find, intercalate, isSuffixOf)
 import Data.Maybe (fromMaybe)
 import Data.Monoid (mappend)
 import qualified Data.Text as T
 import Hakyll
 import System.FilePath.Posix  ((</>))
 import System.Process (proc, readCreateProcess)
+import Text.HTML.TagSoup (Tag (..), parseTags)
+import qualified Text.HTML.TagSoup as TagSoup
 
 --------------------------------------------------------------------------------
 root :: String
@@ -52,8 +55,9 @@ main = hakyll $ do
 
     match "ideas/*.md" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler 
-                >>= loadAndApplyTemplate "templates/post.html"    ideaCtx
+        compile $ pandocCompiler
+                >>= fixHeadingIds
+                >>= loadAndApplyTemplate "templates/post.html"    (tocField `mappend` ideaCtx)
                 >>= loadAndApplyTemplate "templates/default.html" ideaCtx
                 >>= relativizeUrls
 
@@ -64,7 +68,8 @@ main = hakyll $ do
     match "posts/*.md" $ do
         route removeDateRoute
         compile $ pandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    postCtx
+                >>= fixHeadingIds
+                >>= loadAndApplyTemplate "templates/post.html"    (tocField `mappend` postCtx)
                 >>= saveSnapshot "content"
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
                 >>= relativizeUrls
@@ -72,7 +77,8 @@ main = hakyll $ do
     match "posts/*.typ" $ do
         route removeDateRoute
         compile $ typstCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    postCtx
+                >>= fixHeadingIds
+                >>= loadAndApplyTemplate "templates/post.html"    (tocField `mappend` postCtx)
                 >>= saveSnapshot "content"
                 >>= loadAndApplyTemplate "templates/default.html" postCtx
                 >>= relativizeUrls
@@ -80,7 +86,8 @@ main = hakyll $ do
     match "recipes/*" $ do
         route $ setExtension "html"
         compile $ pandocCompiler
-                >>= loadAndApplyTemplate "templates/post.html"    recipeCtx
+                >>= fixHeadingIds
+                >>= loadAndApplyTemplate "templates/post.html"    (tocField `mappend` recipeCtx)
                 >>= loadAndApplyTemplate "templates/default.html" recipeCtx
                 >>= relativizeUrls
 
@@ -167,6 +174,69 @@ extractBody = T.unpack . inner . T.pack
     inner t =
       let afterOpen = T.drop 1 . snd . T.breakOn ">" . snd $ T.breakOn "<body" t
       in fst $ T.breakOn "</body>" afterOpen
+
+--------------------------------------------------------------------------------
+-- Table of contents
+--
+-- Pandoc gives body headings ids for free; Typst's HTML export doesn't.
+data Heading = Heading
+    { headingLevel :: Int
+    , headingId    :: String
+    , headingText  :: String
+    }
+
+-- | Rewrite the post body so every heading carries an id.
+fixHeadingIds :: Item String -> Compiler (Item String)
+fixHeadingIds = withItemBody (return . fst . extractHeadings)
+
+-- | Render toc from the body's headings.
+tocField :: Context String
+tocField = field "toc" $ \item -> do
+    let headings = snd (extractHeadings (itemBody item))
+        minLevel = minimum (maxBound : map headingLevel headings)
+        ctx      = boolField "has-toc" (const (length headings >= 2)) `mappend`
+                   listField "headings" (headingCtx minLevel) (mapM makeItem headings)
+    tpl <- loadBody "templates/toc.html"
+    itemBody <$> applyTemplate tpl ctx (itemSetBody () item)
+
+headingCtx :: Int -> Context Heading
+headingCtx minLevel =
+    field "heading-id"     (return . headingId . itemBody) `mappend`
+    field "heading-text"   (return . escapeHtml . headingText . itemBody) `mappend`
+    field "heading-indent" (return . indent . itemBody)
+  where
+    indent h = "pl-" ++ show (min 9 (3 * (headingLevel h - minLevel + 1)))
+
+extractHeadings :: String -> (String, [Heading])
+extractHeadings html = (TagSoup.renderTags tags, headings)
+  where
+    (tags, headings) = go [] (parseTags html)
+
+    go :: [String] -> [Tag String] -> ([Tag String], [Heading])
+    go used (TagOpen name attrs : rest)
+        | Just level <- tagLevel name =
+            let (inner, rest') = break (== TagClose name) rest
+                (close, after) = splitAt 1 rest'
+                text      = TagSoup.innerText inner
+                hid       = fromMaybe (uniqueSlug used text) (lookup "id" attrs)
+                attrs'    = ("id", hid) : filter ((/= "id") . fst) attrs
+                (out, hs) = go (hid : used) after
+            in ( TagOpen name attrs' : inner ++ close ++ out
+               , Heading level hid text : hs )
+    go used (t : rest) = let (out, hs) = go used rest in (t : out, hs)
+    go _    []         = ([], [])
+
+    tagLevel ['h', d] | d `elem` ['1' .. '4'] = Just (digitToInt d)
+    tagLevel _                                = Nothing
+
+-- | A URL-safe id for a heading: its text slugified, then suffixed
+-- if that slug is already taken.
+uniqueSlug :: [String] -> String -> String
+uniqueSlug used text = fromMaybe slug (find (`notElem` used) candidates)
+  where
+    slug       = intercalate "-" (words (filter ok (map toLower text)))
+    candidates = slug : [ slug ++ "-" ++ show n | n <- [1 :: Int ..] ]
+    ok c       = isAlphaNum c || c == ' ' || c == '-'
 
 --------------------------------------------------------------------------------
 siteCtx :: Context String

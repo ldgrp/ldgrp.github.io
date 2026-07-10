@@ -6,6 +6,10 @@
   color-scheme: dark;
 }
 
+article :is(h1, h2, h3, h4) {
+  scroll-margin-top: 1.5rem;
+}
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";

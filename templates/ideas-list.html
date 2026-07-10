@@ -3,9 +3,7 @@
         <li class="group">
                 <a href="$url$">
                 $if(meta-img)$
-                <img src="$meta-img$" class="h-[150px] w-full object-cover rounded-lg my-3 grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0">
-                $else$
-                <div class="h-[150px] w-full object-cover rounded-lg my-3 bg-yellow-300 dark:bg-yellow-500 grayscale-0 brightness-75 group-hover:brightness-100 group-hover:grayscale-0"></div>
+                <img src="$meta-img$" class="h-[150px] max-w-64 w-full aspect-video object-cover rounded-lg my-3 grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0">
                 $endif$
                 </a>
             <div class="metadata">

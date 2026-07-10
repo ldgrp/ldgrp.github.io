@@ -1,0 +1,50 @@
+$if(has-toc)$
+<aside
+  id="toc"
+  aria-label="Table of contents"
+  class="hidden lg:block lg:fixed lg:top-24 lg:left-[calc(50%+23rem)] lg:w-48 lg:max-h-[72vh] lg:overflow-y-auto text-sm leading-snug"
+>
+  <nav>
+    <div
+      class="text-xs text-zinc-500 mb-2"
+    >
+      Contents
+    </div>
+    <ol class="list-none m-0 p-0 border-l border-zinc-300 dark:border-zinc-700">
+      $for(headings)$
+      <li>
+        <a
+          href="#$heading-id$"
+          data-toc-link
+          class="$heading-indent$ block py-0.5 -ml-px border-l border-transparent truncate text-zinc-500 dark:text-zinc-400 hover:text-yellow-600 dark:hover:text-yellow-500 data-active:text-yellow-600 dark:data-active:text-yellow-500 data-active:border-yellow-600 dark:data-active:border-yellow-500"
+          >$heading-text$</a
+        >
+      </li>
+      $endfor$
+    </ol>
+  </nav>
+</aside>
+<script>
+  (function () {
+    var links = document.querySelectorAll("#toc a[data-toc-link]");
+    if (!links.length) return;
+    var targets = Array.prototype.map.call(links, function (a) {
+      return document.getElementById(a.getAttribute("href").slice(1));
+    });
+
+    function update() {
+      var current = -1;
+      targets.forEach(function (t, i) {
+        if (t && t.getBoundingClientRect().top < 120) current = i;
+      });
+      links.forEach(function (a, i) {
+        a.toggleAttribute("data-active", i === current);
+      });
+    }
+
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  })();
+</script>
+$endif$
