@@ -137,7 +137,30 @@ article {
 }
 
 article :is(h1, h2, h3, h4) {
-  @apply mt-8 scroll-m-6;
+  @apply mt-8 scroll-m-6 relative;
+}
+
+/* Click-to-copy anchor, revealed on heading hover. It hangs in the left
+   margin (right edge at the heading's left edge, pr-3 as the gap), so it only
+   appears from md up, where the centered max-w-2xl column leaves margin to
+   host it. Narrower screens have no gutter — and no hover — so it stays hidden. */
+.heading-anchor {
+  @apply hidden md:flex absolute inset-y-0 right-full items-center pr-3 font-normal no-underline select-none text-zinc-400 dark:text-zinc-500 opacity-0 transition-opacity;
+}
+.heading-anchor::before {
+  content: "#";
+}
+.heading-anchor[data-copied]::before {
+  content: "✓";
+}
+article :is(h1, h2, h3, h4):hover > .heading-anchor,
+.heading-anchor:focus-visible,
+.heading-anchor[data-copied] {
+  @apply opacity-100;
+}
+.heading-anchor:hover,
+.heading-anchor[data-copied] {
+  @apply text-yellow-600 dark:text-yellow-500;
 }
 
 article h1 {
