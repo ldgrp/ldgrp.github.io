@@ -135,9 +135,21 @@ footer a {
 article {
   @apply text-base;
 }
+.post-body > * {
+  @apply mt-4;
+}
+.post-body > :first-child {
+  @apply mt-0;
+}
+.post-body > :is(h1, h2, h3, h4) {
+  @apply mt-10;
+}
+.post-body > :is(h1, h2, h3, h4) + * {
+  @apply mt-3;
+}
 
 article :is(h1, h2, h3, h4) {
-  @apply mt-8 scroll-m-6 relative;
+  @apply relative scroll-mt-8 font-bold;
 }
 
 /* Click-to-copy anchor, revealed on heading hover. It hangs in the left
@@ -164,23 +176,23 @@ article :is(h1, h2, h3, h4):hover > .heading-anchor,
 }
 
 article h1 {
-  @apply text-3xl sm:text-4xl font-bold mt-6 mb-4;
+  @apply text-3xl sm:text-4xl;
 }
 
 article h2 {
-  @apply text-2xl font-bold mt-6 mb-4;
+  @apply text-2xl;
 }
 
 article h3 {
-  @apply text-xl font-bold mb-4;
+  @apply text-xl;
 }
 
 article h4 {
-  @apply text-base font-bold mb-4 leading-none;
+  @apply text-base;
 }
 
 article p {
-  @apply mt-6 leading-7;
+  @apply leading-7;
 }
 
 article a {
@@ -188,17 +200,12 @@ article a {
 }
 
 article hr {
-  @apply my-8 h-px border-0 bg-zinc-300 dark:bg-zinc-700;
+  @apply my-10 h-px border-0 bg-zinc-300 dark:bg-zinc-700;
 }
 
 article ul,
 article ol {
-  @apply my-6 ml-6 space-y-2;
-}
-
-article ul ul,
-article ol ol {
-  @apply pl-5;
+  @apply ml-6;
 }
 
 article ul {
@@ -207,6 +214,21 @@ article ul {
 
 article ol {
   @apply list-decimal;
+}
+
+article li + li {
+  @apply mt-1;
+}
+
+article li > p {
+  @apply my-0 leading-7;
+}
+article li > p + p {
+  @apply mt-3;
+}
+
+article li > :is(ul, ol) {
+  @apply mt-2 pl-5;
 }
 
 article table {

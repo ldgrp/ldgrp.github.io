@@ -10,6 +10,10 @@ import System.FilePath.Posix  ((</>))
 import System.Process (proc, readCreateProcess)
 import Text.HTML.TagSoup (Tag (..), parseTags)
 import qualified Text.HTML.TagSoup as TagSoup
+import Text.Pandoc (runPure, readTypst, writeHtml5String)
+import Text.Pandoc.Definition (Block (Header), Pandoc)
+import Text.Pandoc.Options (HTMLMathMethod (MathML), WriterOptions (..))
+import Text.Pandoc.Walk (walk)
 
 --------------------------------------------------------------------------------
 root :: String
@@ -39,7 +43,15 @@ main = hakyll $ do
         route   idRoute
         compile copyFileCompiler
 
-    match "css/*" $ do
+    tailwindDeps <- makePatternDependency $
+        "templates/*" .||. "posts/**" .||. "ideas/**" .||. "recipes/**"
+            .||. "index.md" .||. "404.html"
+    rulesExtraDependencies [tailwindDeps] $
+        match "css/input.css" $ do
+            route   $ constRoute "css/style.css"
+            compile tailwindCompiler
+
+    match "css/syntax.css" $ do
         route   idRoute
         compile compressCssCompiler
 
@@ -146,34 +158,34 @@ main = hakyll $ do
     match "templates/*" $ compile templateBodyCompiler
 
 --------------------------------------------------------------------------------
-typstArgs :: Compiler [String]
-typstArgs = do
-    ident <- getUnderlying
-    meta  <- getMetadata ident
-    return ([ "compile", "-", "-"
-            , "--format", "html", "--features", "html"
-            , "--root", "." ] ++ metadataInputs meta)
-    
--- Compile a Typst source file to HTML via native Typst HTML export.
+tailwindCompiler :: Compiler (Item String)
+tailwindCompiler = do
+    inputPath <- toFilePath <$> getUnderlying
+    out <- unsafeCompiler $
+        readCreateProcess
+            (proc "tailwindcss" ["-i", inputPath, "-o", "-", "--minify"]) ""
+    makeItem out
+
+--------------------------------------------------------------------------------
+-- | Compile a Typst source file to an HTML body with pandoc's typst reader.
 typstCompiler :: Compiler (Item String)
 typstCompiler = do
-    args <- typstArgs
-    src <- itemBody <$> getResourceBody
-    out <- unsafeCompiler $ readCreateProcess (proc "typst" args) src
-    makeItem (extractBody out)
+    item <- getResourceBody
+    case runPure (readTypst defaultHakyllReaderOptions (T.pack (itemBody item))
+                    >>= writeHtml5String typstWriterOptions . shiftHeadings) of
+        Left  err -> fail ("Typst read error: " ++ show err)
+        Right out -> return (itemSetBody (T.unpack out) item)
 
-metadataInputs :: Metadata -> [String]
-metadataInputs meta =
-    concat [ ["--input", k ++ "=" ++ v]
-           | k <- ["title", "date", "last-edited", "status"]
-           , Just v <- [lookupString k meta] ]
-
-extractBody :: String -> String
-extractBody = T.unpack . inner . T.pack
+shiftHeadings :: Pandoc -> Pandoc
+shiftHeadings = walk shift
   where
-    inner t =
-      let afterOpen = T.drop 1 . snd . T.breakOn ">" . snd $ T.breakOn "<body" t
-      in fst $ T.breakOn "</body>" afterOpen
+    shift (Header n attr inl) = Header (n + 1) attr inl
+    shift b                   = b
+
+-- | Emit inline MathML so @$…$@ renders natively, as the native export did.
+typstWriterOptions :: WriterOptions
+typstWriterOptions =
+    defaultHakyllWriterOptions { writerHTMLMathMethod = MathML }
 
 --------------------------------------------------------------------------------
 -- Table of contents
@@ -246,7 +258,7 @@ uniqueSlug used text = fromMaybe slug (find (`notElem` used) candidates)
 -- cache.
 cssCacheField :: Context a
 cssCacheField = field "css-version" $ \_ -> do
-    style  <- loadBody "css/style.css"
+    style  <- loadBody "css/input.css"
     syntax <- loadBody "css/syntax.css"
     return (shortHash (style ++ syntax))
 
