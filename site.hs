@@ -1,5 +1,6 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
+import Control.Monad.State (State, evalState, get, put)
 import Data.Char (digitToInt, isAlphaNum, toLower)
 import Data.List (find, foldl', intercalate, isSuffixOf)
 import Data.Maybe (fromMaybe)
@@ -11,9 +12,10 @@ import System.Process (proc, readCreateProcess)
 import Text.HTML.TagSoup (Tag (..), parseTags)
 import qualified Text.HTML.TagSoup as TagSoup
 import Text.Pandoc (runPure, readTypst, writeHtml5String)
-import Text.Pandoc.Definition (Block (Header), Pandoc)
+import Text.Pandoc.Definition (Block (..), Format (..), Inline (..), Pandoc)
 import Text.Pandoc.Options (HTMLMathMethod (MathML), WriterOptions (..))
-import Text.Pandoc.Walk (walk)
+import Text.Pandoc.Shared (blocksToInlines)
+import Text.Pandoc.Walk (walk, walkM)
 
 --------------------------------------------------------------------------------
 root :: String
@@ -67,7 +69,7 @@ main = hakyll $ do
 
     match "ideas/*.md" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ pandocSidenoteCompiler
                 >>= fixHeadingIds
                 >>= loadAndApplyTemplate "templates/post.html"    (tocField `mappend` ideaCtx)
                 >>= loadAndApplyTemplate "templates/default.html" ideaCtx
@@ -79,7 +81,7 @@ main = hakyll $ do
 
     match "posts/*.md" $ do
         route removeDateRoute
-        compile $ pandocCompiler
+        compile $ pandocSidenoteCompiler
                 >>= fixHeadingIds
                 >>= loadAndApplyTemplate "templates/post.html"    (tocField `mappend` postCtx)
                 >>= saveSnapshot "content"
@@ -97,7 +99,7 @@ main = hakyll $ do
 
     match "recipes/*" $ do
         route $ setExtension "html"
-        compile $ pandocCompiler
+        compile $ pandocSidenoteCompiler
                 >>= fixHeadingIds
                 >>= loadAndApplyTemplate "templates/post.html"    (tocField `mappend` recipeCtx)
                 >>= loadAndApplyTemplate "templates/default.html" recipeCtx
@@ -167,12 +169,19 @@ tailwindCompiler = do
     makeItem out
 
 --------------------------------------------------------------------------------
+-- | Markdown compiler that additionally turns footnotes into margin sidenotes.
+pandocSidenoteCompiler :: Compiler (Item String)
+pandocSidenoteCompiler =
+    pandocCompilerWithTransform
+        defaultHakyllReaderOptions defaultHakyllWriterOptions sidenotes
+
+--------------------------------------------------------------------------------
 -- | Compile a Typst source file to an HTML body with pandoc's typst reader.
 typstCompiler :: Compiler (Item String)
 typstCompiler = do
     item <- getResourceBody
     case runPure (readTypst defaultHakyllReaderOptions (T.pack (itemBody item))
-                    >>= writeHtml5String typstWriterOptions . shiftHeadings) of
+                    >>= writeHtml5String typstWriterOptions . sidenotes . shiftHeadings) of
         Left  err -> fail ("Typst read error: " ++ show err)
         Right out -> return (itemSetBody (T.unpack out) item)
 
@@ -186,6 +195,33 @@ shiftHeadings = walk shift
 typstWriterOptions :: WriterOptions
 typstWriterOptions =
     defaultHakyllWriterOptions { writerHTMLMathMethod = MathML }
+
+--------------------------------------------------------------------------------
+-- Sidenotes
+sidenotes :: Pandoc -> Pandoc
+sidenotes doc = evalState (walkM numberNotes doc) 1
+  where
+    numberNotes :: [Inline] -> State Int [Inline]
+    numberNotes = fmap concat . mapM expand
+
+    expand :: Inline -> State Int [Inline]
+    expand (Note blocks) = do
+        n <- get
+        put (n + 1)
+        let sid    = "sn-" ++ show n
+            marker = RawInline (Format "html") $ T.pack $
+                       "<label class=\"sidenote-number\" for=\"" ++ sid ++ "\"></label>" ++
+                       "<input type=\"checkbox\" class=\"sidenote-toggle\" id=\"" ++ sid ++ "\"/>"
+            body   = Span ("", ["sidenote"], []) (noteInlines blocks)
+        return [marker, body]
+    expand inline = return [inline]
+
+    noteInlines :: [Block] -> [Inline]
+    noteInlines = concatMap flatten
+      where
+        flatten (BlockQuote bs) =
+            [Span ("", ["sidenote-quote"], []) (blocksToInlines bs)]
+        flatten b               = blocksToInlines [b]
 
 --------------------------------------------------------------------------------
 -- Table of contents
@@ -232,7 +268,7 @@ extractHeadings html = (TagSoup.renderTags tags, headings)
         | Just level <- tagLevel name =
             let (inner, rest') = break (== TagClose name) rest
                 (close, after) = splitAt 1 rest'
-                text      = TagSoup.innerText inner
+                text      = TagSoup.innerText (dropSidenotes inner)
                 hid       = fromMaybe (uniqueSlug used text) (lookup "id" attrs)
                 attrs'    = ("id", hid) : filter ((/= "id") . fst) attrs
                 (out, hs) = go (hid : used) after
@@ -243,6 +279,21 @@ extractHeadings html = (TagSoup.renderTags tags, headings)
 
     tagLevel ['h', d] | d `elem` ['1' .. '4'] = Just (digitToInt d)
     tagLevel _                                = Nothing
+
+dropSidenotes :: [Tag String] -> [Tag String]
+dropSidenotes [] = []
+dropSidenotes (t@(TagOpen "span" attrs) : rest)
+    | maybe False (elem "sidenote" . words) (lookup "class" attrs) =
+        dropSidenotes (skipSpan (1 :: Int) rest)
+    | otherwise = t : dropSidenotes rest
+  where
+    skipSpan _ []                        = []
+    skipSpan d (TagOpen "span" _ : more) = skipSpan (d + 1) more
+    skipSpan d (TagClose "span"  : more)
+        | d <= 1    = more
+        | otherwise = skipSpan (d - 1) more
+    skipSpan d (_ : more)                = skipSpan d more
+dropSidenotes (t : rest) = t : dropSidenotes rest
 
 -- | A URL-safe id for a heading: its text slugified, then suffixed
 -- if that slug is already taken.

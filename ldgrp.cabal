@@ -8,6 +8,7 @@ executable site
   build-depends:    base >= 4.16 && < 5
                   , hakyll == 4.16.*
                   , filepath >= 1.4 && < 2
+                  , mtl
                   , pandoc
                   , pandoc-types
                   , process >= 1.6 && < 2

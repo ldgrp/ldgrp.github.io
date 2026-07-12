@@ -264,8 +264,79 @@ article figcaption {
 }
 
 p > code,
-li > code {
+li > code,
+.sidenote code {
   @apply bg-neutral-800 rounded px-[0.3rem] py-[0.2rem] font-mono text-sm;
+}
+.sidenote code {
+  @apply text-xs;
+}
+
+/* Sidenotes / margin notes */
+.post-body {
+  counter-reset: sidenote-counter;
+}
+
+label.sidenote-number {
+  counter-increment: sidenote-counter;
+}
+label.sidenote-number::after {
+  content: counter(sidenote-counter);
+  @apply align-super text-xs font-medium text-yellow-600 dark:text-yellow-500 ml-px;
+}
+
+input.sidenote-toggle {
+  @apply hidden;
+}
+
+.sidenote::before {
+  content: counter(sidenote-counter) " ";
+  @apply font-medium text-yellow-600 dark:text-yellow-500;
+}
+
+.sidenote {
+  @apply font-normal;
+}
+
+.sidenote a {
+  @apply font-normal;
+}
+
+.sidenote-quote {
+  @apply block my-2 pl-3 border-l-2 border-gray-300 dark:border-gray-600 not-italic;
+}
+
+@media (max-width: 77.999rem) {
+  label.sidenote-number {
+    @apply relative cursor-pointer;
+  }
+  label.sidenote-number::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+  .sidenote {
+    @apply hidden;
+  }
+  .sidenote-toggle:checked + .sidenote {
+    @apply block my-3 py-2 px-3 border-l-2 border-yellow-600/60 bg-amber-100/50 dark:bg-zinc-900 rounded-r text-sm leading-6 text-gray-600 dark:text-gray-400;
+  }
+}
+
+@media (min-width: 78rem) {
+  .sidenote {
+    float: right;
+    clear: right;
+    width: 16rem;
+    margin-right: -18rem;
+    margin-top: 0.2rem;
+    margin-bottom: 1rem;
+    @apply block text-sm leading-6 text-gray-500 dark:text-gray-400;
+  }
 }
 
 div.sourceCode {
