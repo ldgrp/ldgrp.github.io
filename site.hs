@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
 import Data.Char (digitToInt, isAlphaNum, toLower)
-import Data.List (find, intercalate, isSuffixOf)
+import Data.List (find, foldl', intercalate, isSuffixOf)
 import Data.Maybe (fromMaybe)
 import Data.Monoid (mappend)
 import qualified Data.Text as T
@@ -242,8 +242,21 @@ uniqueSlug used text = fromMaybe slug (find (`notElem` used) candidates)
     ok c       = isAlphaNum c || c == ' ' || c == '-'
 
 --------------------------------------------------------------------------------
+-- | A content hash of the compiled stylesheets, used to bust the browser
+-- cache.
+cssCacheField :: Context a
+cssCacheField = field "css-version" $ \_ -> do
+    style  <- loadBody "css/style.css"
+    syntax <- loadBody "css/syntax.css"
+    return (shortHash (style ++ syntax))
+
+shortHash :: String -> String
+shortHash = show . foldl' step (5381 :: Integer)
+  where step h c = (h * 33 + toInteger (fromEnum c)) `mod` 4294967296
+
 siteCtx :: Context String
 siteCtx =
+    cssCacheField `mappend`
     constField "root" root `mappend`
     cleanUrlField `mappend`
     defaultContext
@@ -261,6 +274,7 @@ cleanUrlField = field "url" $ \item -> do
 
 entryCtx :: String -> Context String
 entryCtx entryType =
+    cssCacheField `mappend`
     constField "entry-type" entryType `mappend`
     dateField "date" "%d %b %Y" `mappend`
     readingTimeField `mappend`
@@ -297,6 +311,7 @@ ideas = do
 
 archiveCtx :: Context String
 archiveCtx =
+    cssCacheField `mappend`
     listField "posts" postCtx (recentFirst =<< posts) `mappend`
     listField "ideas" ideaCtx (recentFirst =<< ideas) `mappend`
     constField "title" "Archive" `mappend`
@@ -304,6 +319,7 @@ archiveCtx =
     
 indexCtx :: Context String
 indexCtx =
+    cssCacheField `mappend`
     listField "posts" postCtx (recentFirst =<< posts) `mappend`
     listField "ideas" ideaCtx (recentFirst =<< ideas) `mappend`
     constField "title" "Leo Orpilla III" `mappend`
@@ -311,6 +327,7 @@ indexCtx =
 
 ideasCtx :: Context String
 ideasCtx =
+    cssCacheField `mappend`
     listField "ideas" ideaCtx (recentFirst =<< ideas) `mappend`
     constField "title" "Ideas" `mappend`
     defaultContext
